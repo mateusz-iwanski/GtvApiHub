@@ -1,7 +1,11 @@
-﻿using Microsoft.AspNetCore.Hosting;
+﻿using GtvApiHub.WebApi;
+using GtvApiHub.WebApi.EndPointInterfaces;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using NLog.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -16,16 +20,20 @@ namespace GtvApiHub
         /// <summary>
         /// Initializes a new instance of the ConfigureServices class.
         /// </summary>
-        public void ConfigureServices(IServiceCollection services)
+        public void ConfigureServices(HostBuilderContext context, IServiceCollection services)
         {
 
             services.AddSingleton<IConfiguration>((ConfigurationBuilder) =>
             {
                 return new ConfigurationBuilder()
                     .SetBasePath(Directory.GetCurrentDirectory())
-                    .AddJsonFile("settings.json", optional: false, reloadOnChange: true)
+                    .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
                     .Build();
             });
+
+            // Add options to bind to the configuration instance
+            services.Configure<GtvApiSettings>(context.Configuration.GetSection("Access").GetSection("GtvApi"));
+            services.Configure<TokenSettings>(context.Configuration.GetSection("TokenSettings"));
 
             // Add NLog as the logging provider
             services.AddLogging(loggingBuilder =>
@@ -38,6 +46,11 @@ namespace GtvApiHub
             });
             // Register NLog's ILogger
             services.AddSingleton<NLog.ILogger>(provider => NLog.LogManager.GetCurrentClassLogger());
+
+            services.AddScoped<IApiConfigurationServices, ApiConfigurationServices>();
+            services.AddScoped<ITokenSettingsManager, TokenSettingsManager>();
+
+            services.AddScoped<IToken, Token>();
         }
     }
 }
