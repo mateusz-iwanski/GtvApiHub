@@ -10,11 +10,18 @@
   <ItemGroup>
     <PackageReference Include="NLog" Version="5.3.4" />
     <PackageReference Include="NLog.Web" Version="5.3.14" />
+    <PackageReference Include="NLog.Web.AspNetCore" Version="5.3.14" />
     <PackageReference Include="Refit" Version="7.2.1" />
   </ItemGroup>
 
   <ItemGroup>
     <Folder Include="EndPointInterfaces\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="appsettings.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>
