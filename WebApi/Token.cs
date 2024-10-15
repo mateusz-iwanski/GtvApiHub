@@ -59,5 +59,20 @@ namespace GtvApiHub.WebApi
             return deserializedResponse;
         }
 
+        private bool checkExpirationDate()
+        {
+            var token = _tokenSettingsManager.GetTokenSettings();
+            
+            if (token.ExpiresIn != null)
+            {
+                var newDateTime = DateTime.Now.AddMinutes(-1);
+                var tokenDateTime = DateTime.Parse(token.ExpiresIn);    
+                
+                return newDateTime < tokenDateTime;
+            }
+
+            // token ExpiresIn is null
+            return false;
+        }   
     }
 }
