@@ -15,7 +15,7 @@ namespace GtvApiHub.WebApi.EndPointInterfaces
     /// Represents a token which is in the request header (OAuth 2.0).
     /// </summary>
 
-    public interface ITokenService
+    public interface ITokenEndPoint
     {
         [Post("/connect/token")]
         Task<HttpResponseMessage> GetAsync([Body(BodySerializationMethod.UrlEncoded)] TokenRequestDto tokenCreateDto);
