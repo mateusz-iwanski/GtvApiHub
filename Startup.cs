@@ -1,5 +1,5 @@
 ﻿using GtvApiHub.WebApi;
-using GtvApiHub.WebApi.EndPointInterfaces;
+using GtvApiHub.WebApi.Services;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -47,10 +47,14 @@ namespace GtvApiHub
             // Register NLog's ILogger
             services.AddSingleton<NLog.ILogger>(provider => NLog.LogManager.GetCurrentClassLogger());
 
-            services.AddScoped<IApiConfigurationServices, ApiConfigurationServices>();
+            // Add GTV Api services                                    
+            services.AddScoped<IApiConfigurationServices, ApiConfigurationServices>();            
             services.AddScoped<ITokenSettingsManager, TokenSettingsManager>();
 
+            services.AddScoped<IItem, Item>();
             services.AddScoped<IToken, Token>();
+            services.AddScoped<IPrice, Price>();
+            services.AddScoped<IAttribute, AttributeItem>();
         }
     }
 }
