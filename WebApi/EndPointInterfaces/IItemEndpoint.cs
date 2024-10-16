@@ -12,9 +12,12 @@ namespace GtvApiHub.WebApi.EndPointInterfaces
     /// 
     /// Represents product.
     /// </summary>
-    public interface IItemService
+    public interface IItemEndpoint
     {
         [Get("/odata/item")]
         Task<HttpResponseMessage> GetAsync();
+
+        [Get("/odata/item?$filter=LanguageCode eq '{code}'")]
+        Task<HttpResponseMessage> GetByLanguageAsync([AliasAs("code")] string code);
     }
 }
