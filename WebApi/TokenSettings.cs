@@ -10,7 +10,7 @@ namespace GtvApiHub.WebApi
     public class TokenSettings
     {
         private string? _secretToken { get; set; }
-        private string? _expiresIn { get; set; }
+        private DateTime? _expiresIn { get; set; }
 
         public string? SecretToken
         {
@@ -18,7 +18,7 @@ namespace GtvApiHub.WebApi
             set { _secretToken = value; }
         }
 
-        public string? ExpiresIn
+        public DateTime? ExpiresIn
         {
             get { return _expiresIn; } //?? throw new SettingsException($"In appsettings.json TokenSettings->ExpiresIn not exists"); }
             set { _expiresIn = value; }
