@@ -3,10 +3,10 @@ using System.Diagnostics;
 using System.Text.Json;
 using System.Net.Http;
 using System.Threading;
-using GtvApiHub.WebApi;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Xml.Linq;
+using GtvApiHub.WebApi.Services;
 
 namespace GtvApiHub.Helpers
 {
