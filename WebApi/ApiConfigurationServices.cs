@@ -14,16 +14,25 @@ namespace GtvApiHub.WebApi
 {
     public interface IApiConfigurationServices
     {
-        ITokenService TokenService { get; }
+        ITokenEndPoint TokenService { get; }
+        IItemEndpoint ItemService { get; }
+        IPriceEndPoint PriceService { get; }
+        IAttributeEndPoint AttributeService { get; }
     }
 
     public class ApiConfigurationServices : ApiConfiguration, IApiConfigurationServices
     {
-        public ITokenService TokenService { get; private set; }
+        public ITokenEndPoint TokenService { get; private set; }
+        public IItemEndpoint ItemService { get; private set; }
+        public IPriceEndPoint PriceService { get; private set; }
+        public IAttributeEndPoint AttributeService { get; private set; }
 
-        public ApiConfigurationServices(IOptions<GtvApiSettings> gtvApiSettings) : base(gtvApiSettings)
+        public ApiConfigurationServices(IOptions<GtvApiSettings> gtvApiSettings, IServiceProvider serviceProvider) : base(gtvApiSettings, serviceProvider)
         {
-            TokenService = RestService.For<ITokenService>(httpClient);
+            TokenService = RestService.For<ITokenEndPoint>(httpClient);
+            ItemService = RestService.For<IItemEndpoint>(httpClient);
+            PriceService = RestService.For<IPriceEndPoint>(httpClient);
+            AttributeService = RestService.For<IAttributeEndPoint>(httpClient);
         }
     }
 }
