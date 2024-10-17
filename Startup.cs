@@ -1,4 +1,5 @@
-﻿using GtvApiHub.WebApi;
+﻿using GtvApiHub.Firestore;
+using GtvApiHub.WebApi;
 using GtvApiHub.WebApi.Services;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -31,10 +32,6 @@ namespace GtvApiHub
                     .Build();
             });
 
-            // Add options to bind to the configuration instance
-            services.Configure<GtvApiSettings>(context.Configuration.GetSection("Access").GetSection("GtvApi"));
-            services.Configure<TokenSettings>(context.Configuration.GetSection("TokenSettings"));
-
             // Add NLog as the logging provider
             services.AddLogging(loggingBuilder =>
             {
@@ -47,6 +44,15 @@ namespace GtvApiHub
             // Register NLog's ILogger
             services.AddSingleton<NLog.ILogger>(provider => NLog.LogManager.GetCurrentClassLogger());
 
+            // Add options to bind to the configuration instance
+            services.Configure<GtvApiSettings>(context.Configuration.GetSection("Access").GetSection("GtvApi"));
+            services.Configure<TokenSettings>(context.Configuration.GetSection("TokenSettings"));
+            services.Configure<FirebaseSettings>(context.Configuration.GetSection("Firebase").GetSection("Firestore"));
+
+            // Add Firestore services
+            services.AddScoped<IFirestoreConnector, FirestoreConnector>(); 
+            services.AddScoped<IFirestoreService, FirestoreService>();
+            
             // Add GTV Api services                                    
             services.AddScoped<IApiConfigurationServices, ApiConfigurationServices>();            
             services.AddScoped<ITokenSettingsManager, TokenSettingsManager>();
