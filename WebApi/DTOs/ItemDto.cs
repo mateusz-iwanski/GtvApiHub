@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Google.Cloud.Firestore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,8 +10,20 @@ namespace GtvApiHub.WebApi.DTOs
     /// <summary>
     /// Item DTO represents products from Api.
     /// </summary>
-    /// <param name="ItemCode">Symbol</param>
-    /// <param name="ItemName">Ttile</param>
-    /// <param name="LanguageCode">Language code</param>
-    public record ItemDto(string ItemCode, string ItemName, string LanguageCode) : IBaseDto, IResponseDto;
+    [FirestoreData]
+    public record ItemDto : IBaseDto, IResponseDto, IFirestoreDto
+    {
+        [FirestoreProperty]
+        public string ItemCode { get; init; }
+
+        [FirestoreProperty]
+        public string ItemName { get; init; }
+        
+        [FirestoreProperty]
+        public string LanguageCode { get; init; }
+
+        public string CollectionName { get => "items"; }
+
+        public string DocumentUniqueField { get => ItemCode; }
+    }
 }
