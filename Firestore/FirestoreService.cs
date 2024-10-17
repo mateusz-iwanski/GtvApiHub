@@ -70,7 +70,27 @@ namespace GtvApiHub.Firestore
             return false;
         }
 
-        
+        /// <summary>
+        /// Delete document (IFirestoreDto.DocumentUniqueField) in collection (IFirestoreDto.CollectionName).
+        /// </summary>
+        /// <param name="dto"></param>
+        /// <returns>true if deleted, false if the document soes not exist</returns>
+        public async Task<bool> DeleteDto(IFirestoreDto dto)
+        {
+            CollectionReference collection = _firestoreDb.Collection(dto.CollectionName);
+            DocumentReference document = collection.Document(dto.DocumentUniqueField);
+
+            if (await IsDtoExists(document))
+            {
+                await collection.Document(dto.DocumentUniqueField).DeleteAsync();
+                _logger.Info($"Firestore document '{dto.DocumentUniqueField}' in collection '{dto.CollectionName}' deleted.");
+                return true;
+            }
+
+            _logger.Info($"Firestore document '{dto.DocumentUniqueField}' in collection '{dto.CollectionName}' does not exist.");
+
+            return false;
+        }
 
 
         /// <summary>
