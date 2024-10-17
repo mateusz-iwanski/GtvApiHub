@@ -7,6 +7,11 @@ using System.Threading.Tasks;
 
 namespace GtvApiHub.WebApi
 {
+    /// <summary>
+    /// The class with the settings for the GtvApi Token.
+    /// 
+    /// Used to bind data from the appsettings.json file.
+    /// </summary>
     public class TokenSettings
     {
         private string? _secretToken { get; set; }
@@ -14,13 +19,13 @@ namespace GtvApiHub.WebApi
 
         public string? SecretToken
         {
-            get { return _secretToken; } ///?? throw new SettingsException($"In appsettings.json TokenSettings->SecretToken not exists"); }
+            get { return _secretToken; } 
             set { _secretToken = value; }
         }
 
         public DateTime? ExpiresIn
         {
-            get { return _expiresIn; } //?? throw new SettingsException($"In appsettings.json TokenSettings->ExpiresIn not exists"); }
+            get { return _expiresIn; } 
             set { _expiresIn = value; }
         }
     }
