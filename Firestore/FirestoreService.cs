@@ -48,6 +48,28 @@ namespace GtvApiHub.Firestore
             return false;
         }
 
+        /// <summary>
+        /// Update document (IFirestoreDto.DocumentUniqueField) in collection (IFirestoreDto.CollectionName) with the DTO object.
+        /// </summary>
+        /// <param name="dto"></param>
+        /// <returns>true if updated, false if the document does not exist</returns>
+        public async Task<bool> UpdateDto(IFirestoreDto dto)
+        {
+            CollectionReference collection = _firestoreDb.Collection(dto.CollectionName);
+            DocumentReference document = collection.Document(dto.DocumentUniqueField);
+
+            if (await IsDtoExists(document))
+            {
+                await collection.Document(dto.DocumentUniqueField).SetAsync(dto);
+                _logger.Info($"Firestore document '{dto.DocumentUniqueField}' in collection '{dto.CollectionName}' updated.");
+                return true;
+            }
+
+            _logger.Info($"Firestore document '{dto.DocumentUniqueField}' in collection '{dto.CollectionName}' does not exist.");
+
+            return false;
+        }
+
         
 
 
