@@ -17,5 +17,9 @@ namespace GtvApiHub.WebApi.EndPointInterfaces
 
         [Get("/odata/Attribute?$filter=LanguageCode eq '{LanguageCode}'")]
         Task<HttpResponseMessage> GetByLanguageCodeAsync([AliasAs("LanguageCode")] string languageCode);
+
+        [Get("/odata/Attribute?$filter=AttributeType eq '{AttributeType}'")]
+        Task<HttpResponseMessage> GetByAttributeTypeAsync([AliasAs("AttributeType")] string attributeType);
+        
     }
 }
