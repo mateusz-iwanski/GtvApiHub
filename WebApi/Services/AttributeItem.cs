@@ -53,5 +53,14 @@ namespace GtvApiHub.WebApi.Services
 
             return listItemDto;
         }
+
+        public async Task<IEnumerable<AttributeDto>> GetByAttributeTypeAndLanguageCodeAsync(AttributeType attributeType, LanguageCode languageCode)
+        {
+            var response = await _services.GetByAttributeTypeAndLanguageCodeAsync(attributeType.ToString(), languageCode.ToString());
+
+            var listItemDto = await response.Content.GetListObjectAsync<AttributeDto>();
+
+            return listItemDto;
+        }
     }
 }
