@@ -44,5 +44,14 @@ namespace GtvApiHub.WebApi.Services
 
             return listItemDto;
         }
+
+        public async Task<IEnumerable<AttributeDto>> GetByAttributeTypeAsync(AttributeType attributeType)
+        {
+            var response = await _services.GetByAttributeTypeAsync(attributeType.ToString());
+
+            var listItemDto = await response.Content.GetListObjectAsync<AttributeDto>();
+
+            return listItemDto;
+        }
     }
 }
