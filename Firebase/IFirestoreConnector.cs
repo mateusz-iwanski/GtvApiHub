@@ -1,6 +1,6 @@
 ﻿using Google.Cloud.Firestore;
 
-namespace GtvApiHub.Firestore
+namespace GtvApiHub.Firebase
 {
     public interface IFirestoreConnector
     {

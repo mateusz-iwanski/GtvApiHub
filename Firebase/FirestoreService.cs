@@ -5,11 +5,9 @@ using System.Reflection;
 using System.Threading.Tasks;
 using NLog;
 
-namespace GtvApiHub.Firestore
+namespace GtvApiHub.Firebase
 {
-    
-
-    public class FirestoreService : IFirestoreService
+    public class FirestoreService: IFirestoreService
     {
         private readonly IFirestoreConnector _firestoreConnector;
         private readonly FirestoreDb _firestoreDb;

@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GtvApiHub.Firestore
+namespace GtvApiHub.Firebase
 {
     /// <summary>
     /// The class with the settings for the Firebase service.

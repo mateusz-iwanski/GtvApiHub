@@ -7,7 +7,7 @@ using System;
 using System.Threading.Tasks;
 using static Google.Cloud.Firestore.V1.StructuredQuery.Types;
 
-namespace GtvApiHub.Firestore
+namespace GtvApiHub.Firebase
 {
     /// <summary>
     /// FirestoreConnector is used to connect to Firestore database.

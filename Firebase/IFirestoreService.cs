@@ -2,7 +2,7 @@
 using GtvApiHub.WebApi.DTOs;
 using System.Threading.Tasks;
 
-namespace GtvApiHub.Firestore
+namespace GtvApiHub.Firebase
 {
     public interface IFirestoreService
     {
