@@ -1,4 +1,5 @@
 ﻿using Google.Cloud.Firestore;
+using GtvApiHub.Firebase;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,7 +29,7 @@ namespace GtvApiHub.WebApi.DTOs
         [FirestoreProperty]
         public string Currency { get; init; }
 
-        public string CollectionName { get => "prices"; }
+        public string CollectionName { get => "itemsPrices"; }
         public string DocumentUniqueField { get => ItemCode; }
     } 
 }
