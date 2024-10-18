@@ -1,4 +1,4 @@
-﻿using GtvApiHub.Firestore;
+﻿using FirebaseManager.Firebase;
 using GtvApiHub.WebApi;
 using GtvApiHub.WebApi.Services;
 using Microsoft.AspNetCore.Hosting;
