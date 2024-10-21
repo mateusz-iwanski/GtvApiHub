@@ -27,7 +27,7 @@ namespace GtvApiHub.WebApi.Services
             return listItemDto;
         }
 
-        public async Task<IEnumerable<AttributeDto>> GetByItemCodeAsync(string itemCode)
+        public async Task<IEnumerable<AttributeDto>> GetAsync(string itemCode)
         {
             var response = await _services.GetByItemCodeAsync(itemCode);
 
@@ -36,7 +36,7 @@ namespace GtvApiHub.WebApi.Services
             return listItemDto;
         }
 
-        public async Task<IEnumerable<AttributeDto>> GetByLanguageCodeAsync(LanguageCode languageCode)
+        public async Task<IEnumerable<AttributeDto>> GetAsync(LanguageCode languageCode)
         {
             var response = await _services.GetByLanguageCodeAsync(languageCode.ToString());
 
@@ -45,7 +45,7 @@ namespace GtvApiHub.WebApi.Services
             return listItemDto;
         }
 
-        public async Task<IEnumerable<AttributeDto>> GetByAttributeTypeAsync(AttributeType attributeType)
+        public async Task<IEnumerable<AttributeDto>> GetAsync(AttributeType attributeType)
         {
             var response = await _services.GetByAttributeTypeAsync(attributeType.ToString());
 
@@ -54,13 +54,13 @@ namespace GtvApiHub.WebApi.Services
             return listItemDto;
         }
 
-        public async Task<IEnumerable<AttributeDto>> GetByAttributeTypeAndLanguageCodeAsync(AttributeType attributeType, LanguageCode languageCode)
+        public async Task<IEnumerable<AttributeDto>> GetAsync(AttributeType attributeType, LanguageCode languageCode)
         {
-            var response = await _services.GetByAttributeTypeAndLanguageCodeAsync(attributeType.ToString(), languageCode.ToString());
+            var response = await _services.GetByAttributeTypeLanguageCodeAsync(attributeType.ToString(), languageCode.ToString());
 
             var listItemDto = await response.Content.GetListObjectAsync<AttributeDto>();
 
             return listItemDto;
-        }
+        }        
     }
 }
