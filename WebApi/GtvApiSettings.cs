@@ -18,6 +18,12 @@ namespace GtvApiHub.WebApi
         private string? _username;
         private string? _password;
 
+        /// <summary>
+        /// Api response file url without prefix with domain. 
+        /// This is used to build the full file url.
+        /// </summary>
+        private string? _fileUrlPrefix;
+
         public string? Url
         {
             get { return _url ?? throw new SettingsException($"In appsettings.json Access->GtvApi->Url not exists"); }
@@ -34,6 +40,12 @@ namespace GtvApiHub.WebApi
         {
             get { return _password ?? throw new SettingsException($"In appsettings.json Access->GtvApi->Password not exists"); }
             set => _password = value;
+        }
+
+        public string? FileUrlPrefix
+        {
+            get { return _fileUrlPrefix ?? throw new SettingsException($"In appsettings.json Access->GtvApi->FileUrlPrefix not exists"); }
+            set => _fileUrlPrefix = value;
         }
     }
 }
