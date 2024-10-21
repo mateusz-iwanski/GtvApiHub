@@ -5,6 +5,6 @@ namespace GtvApiHub.WebApi.Services
     public interface IItem
     {
         Task<IEnumerable<ItemDto>> GetAsync();
-        Task<IEnumerable<ItemDto>> GetByLanguageAsync(LanguageCode languageCode);
+        Task<IEnumerable<ItemDto>> GetAsync(LanguageCode languageCode);
     }
 }
