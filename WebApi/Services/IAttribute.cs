@@ -5,7 +5,9 @@ namespace GtvApiHub.WebApi.Services
     public interface IAttribute
     {
         Task<IEnumerable<AttributeDto>> GetAsync();
-        Task<IEnumerable<AttributeDto>> GetByItemCodeAsync(string itemCode);
-        Task<IEnumerable<AttributeDto>> GetByLanguageCodeAsync(LanguageCode languageCode);
+        Task<IEnumerable<AttributeDto>> GetAsync(string itemCode);
+        Task<IEnumerable<AttributeDto>> GetAsync(LanguageCode languageCode);
+        Task<IEnumerable<AttributeDto>> GetAsync(AttributeType attributeType);
+        Task<IEnumerable<AttributeDto>> GetAsync(AttributeType attributeType, LanguageCode languageCode);
     }
 }
