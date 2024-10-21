@@ -12,11 +12,8 @@ using static Google.Rpc.Context.AttributeContext.Types;
 using System.Net.Http.Headers;
 using Microsoft.AspNetCore.Http;
 using System.Security.Authentication;
-
-using SixLabors.ImageSharp;
-using SixLabors.ImageSharp.Formats.Jpeg;
-using SixLabors.ImageSharp.Formats.Png;
 using NLog;
+using FirebaseManager.Exceptions;
 
 namespace GtvApiHub.Helpers
 {
@@ -54,15 +51,15 @@ namespace GtvApiHub.Helpers
                 var request = new HttpRequestMessage(HttpMethod.Get, uriFile);
                 request.Headers.Add("User-Agent", "HttpClient");
 
-                using (var response = await _httpClient.SendAsync(request, HttpCompletionOption.ResponseHeadersRead).ConfigureAwait(false))
+                using (var response = await _httpClient.SendAsync(request, HttpCompletionOption.ResponseHeadersRead))
                 {
                     response.EnsureSuccessStatusCode();
 
                     using (var fileStream = new FileStream(fullPath, FileMode.Create, FileAccess.Write, FileShare.None))
                     {
-                        using (var httpStream = await response.Content.ReadAsStreamAsync().ConfigureAwait(false))
+                        using (var httpStream = await response.Content.ReadAsStreamAsync())
                         {
-                            await httpStream.CopyToAsync(fileStream).ConfigureAwait(false);
+                            await httpStream.CopyToAsync(fileStream);
 
                             _logger.Info($"File {uriFile} download completed.");
                         }
@@ -71,15 +68,15 @@ namespace GtvApiHub.Helpers
             }
             catch (HttpRequestException e)
             {
-                Console.WriteLine($"Request error: {e.Message}");
+                throw new HttpRequestException($"Request error: {e.Message}", e);
             }
             catch (TaskCanceledException e)
             {
-                Console.WriteLine($"Request timed out: {e.Message}");
+                throw new TaskCanceledException($"Request timed out: {e.Message}", e);
             }
             catch (Exception e)
             {
-                Console.WriteLine($"An error occurred: {e.Message}");
+                throw new CustomException($"An error occurred: {e.Message}", e);
             }
         }
     }
