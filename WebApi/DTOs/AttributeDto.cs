@@ -1,4 +1,4 @@
-﻿using FirebaseManager.Firebase;
+﻿using FirebaseManager.Firestore;
 using Google.Cloud.Firestore;
 using System;
 using System.Collections.Generic;
@@ -12,7 +12,7 @@ namespace GtvApiHub.WebApi.DTOs
     /// Attribute DTO represents product attributes from Api.
     /// </summary>
     [FirestoreData]
-    public record AttributeDto : IBaseDto, IResponseDto, IFirestoreDto
+    public record AttributeDto : IBaseDto, IResponseDto, IFirestoreDto, IStorageStrategy
     {
         [FirestoreProperty]
         public string AttributeName { get; init; }
@@ -34,5 +34,7 @@ namespace GtvApiHub.WebApi.DTOs
 
         public string CollectionName { get => "itemsAttributes"; }
         public string DocumentUniqueField { get => ItemCode; }
+
+        public string? GetFilePath() => FileHandler;
     }
 }
