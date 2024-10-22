@@ -33,7 +33,7 @@ namespace GtvApiHub.WebApi.Services
             return listItemDto;
         }
 
-        public async Task<IEnumerable<ItemDto>> GetByLanguageAsync(LanguageCode languageCode)
+        public async Task<IEnumerable<ItemDto>> GetAsync(LanguageCode languageCode)
         {
             var response = await _services.GetByLanguageAsync(languageCode.ToString());
             
