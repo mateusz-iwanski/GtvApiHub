@@ -31,7 +31,7 @@ namespace GtvApiHub.WebApi.Services
             return listItemDto;
         }
 
-        public async Task<IEnumerable<PriceDto>> GetByItemCodeAsync(string itemCode)
+        public async Task<IEnumerable<PriceDto>> GetAsync(string itemCode)
         {
             var response = await _services.GetByItemCodeAsync(itemCode);
 
