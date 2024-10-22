@@ -1,4 +1,6 @@
 ﻿using FirebaseManager.Firebase;
+using FirebaseManager.Firestore;
+using FirebaseManager.Storage;
 using GtvApiHub.WebApi;
 using GtvApiHub.WebApi.Services;
 using Microsoft.AspNetCore.Hosting;
@@ -47,15 +49,19 @@ namespace GtvApiHub
             // Add options to bind to the configuration instance
             services.Configure<GtvApiSettings>(context.Configuration.GetSection("Access").GetSection("GtvApi"));
             services.Configure<TokenSettings>(context.Configuration.GetSection("TokenSettings"));
-            services.Configure<FirebaseSettings>(context.Configuration.GetSection("Firebase").GetSection("Firestore"));
+            services.Configure<FirebaseSettings>(context.Configuration.GetSection("Firebase"));
 
             // Add Firestore services
             services.AddScoped<IFirestoreConnector, FirestoreConnector>(); 
             services.AddScoped<IFirestoreService, FirestoreService>();
+            services.AddScoped<IFirestorageConnector, FirestorageConnector>();
+            services.AddScoped<IFirestorageService, FirestorageService>();
             
+
             // Add GTV Api services                                    
             services.AddScoped<IApiConfigurationServices, ApiConfigurationServices>();            
             services.AddScoped<ITokenSettingsManager, TokenSettingsManager>();
+            services.AddScoped<IFirestorageFileHandler, FirestorageDtoFileHandler>();            
 
             services.AddScoped<IItem, Item>();
             services.AddScoped<IToken, Token>();
