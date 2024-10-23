@@ -29,7 +29,7 @@ namespace GtvApiHub.WebApi.DTOs
         [FirestoreProperty]
         public string Currency { get; init; }
 
-        public string CollectionName { get => "itemsPrices"; }
-        public string DocumentUniqueField { get => ItemCode; }
+        public string CollectionName { get => "ItemPrice"; }
+        public string DocumentUniqueField { get => "Price_" + ItemCode; }
     } 
 }
