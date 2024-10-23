@@ -12,19 +12,60 @@ namespace GtvApiHub.WebApi.DTOs
     /// Item DTO represents products from Api.
     /// </summary>
     [FirestoreData]
-    public record ItemDto : IBaseDto, IResponseDto, IFirestoreDto
+    public record ItemDto : IBaseDto, IResponseDto, IFirestoreDto, IFirestoreDtoCompareStrategy
     {
         [FirestoreProperty]
         public string ItemCode { get; init; }
 
         [FirestoreProperty]
         public string ItemName { get; init; }
-        
+
         [FirestoreProperty]
         public string LanguageCode { get; init; }
 
-        public string CollectionName { get => "items"; }
+        public string CollectionName { get => "Items_" + LanguageCode; }
 
         public string DocumentUniqueField { get => ItemCode; }
+
+        /// <summary>
+        /// Compare the same type of objects IFirestoreDto.
+        /// 
+        /// If DTO was updated in API we can compare it with Firestore document by 
+        /// immutable fields.
+        /// </summary>
+        /// <returns>false if two different objects the same type, true if are the same objects</returns>
+        public bool CompareStrategy(IFirestoreDto other) 
+        {
+            if (other.GetType() != typeof(ItemDto)) throw new Exception("Invalid type.");
+
+            ItemDto toCompare = (ItemDto)other;
+
+            if (toCompare == this) return true;  // if all fields are the same, return true
+
+            // if fields which can't be updated are different return false
+            // otherwise return true    
+            return ItemCode == toCompare.ItemCode
+                && LanguageCode == toCompare.LanguageCode
+                && CollectionName == toCompare.CollectionName
+                && DocumentUniqueField == toCompare.DocumentUniqueField;
+        }
+
+        /// <summary>
+        /// Check if the DTO object from API is updated relative to Firestore DTO.
+        /// 
+        /// Only compare the same type of DTOs
+        /// </summary>
+        public bool IsUpdated(IFirestoreDto other)
+        {
+            if (CompareStrategy(other) == false) 
+                throw new Exception("Invalid objects. Check only the same objects, before using IsUpdated function use CompareStrategy function to check it.");
+
+            if (other.GetType() != typeof(ItemDto)) throw new Exception("Invalid type.");
+
+            if ((ItemDto)other == this) return false;  // the same so is not updated
+
+            return true;
+        }
+
     }
 }
