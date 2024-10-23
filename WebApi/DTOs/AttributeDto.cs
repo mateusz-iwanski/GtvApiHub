@@ -32,9 +32,9 @@ namespace GtvApiHub.WebApi.DTOs
         [FirestoreProperty]
         public string FileHandler { get; init; }
 
-        public string CollectionName { get => "itemsAttributes"; }
-        public string DocumentUniqueField { get => ItemCode; }
-
+        public string CollectionName { get => "ItemAttributes"; }
+        public string DocumentUniqueField { get; set; }
+        public List<IFirestoreDto> SubCollection { get; set; } 
         public string? GetFilePath() => FileHandler;
     }
 }
