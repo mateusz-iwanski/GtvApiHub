@@ -26,7 +26,7 @@ namespace GtvApiHub.WebApi.DTOs
         [FirestoreProperty]
         public string LanguageCode { get; init; }
 
-        [FirestoreProperty]
+        [FirestoreProperty] 
         public string Value { get; init; }
 
         [FirestoreProperty]
@@ -34,7 +34,6 @@ namespace GtvApiHub.WebApi.DTOs
 
         public string CollectionName { get => "ItemAttributes"; }
         public string DocumentUniqueField { get; set; }
-        public List<IFirestoreDto> SubCollection { get; set; } 
         public string? GetFilePath() => FileHandler;
     }
 }
