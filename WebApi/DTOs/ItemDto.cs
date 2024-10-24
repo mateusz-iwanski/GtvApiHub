@@ -34,7 +34,7 @@ namespace GtvApiHub.WebApi.DTOs
         /// immutable fields.
         /// </summary>
         /// <returns>false if two different objects the same type, true if are the same objects</returns>
-        public bool CompareStrategy(IFirestoreDto other) 
+        public bool Compare(IFirestoreDto other) 
         {
             if (other.GetType() != typeof(ItemDto)) throw new Exception("Invalid type.");
 
@@ -42,7 +42,7 @@ namespace GtvApiHub.WebApi.DTOs
 
             if (toCompare == this) return true;  // if all fields are the same, return true
 
-            // if fields which can't be updated are different return false
+            // if fields which must be updated are different return false
             // otherwise return true    
             return ItemCode == toCompare.ItemCode
                 && LanguageCode == toCompare.LanguageCode
@@ -57,8 +57,8 @@ namespace GtvApiHub.WebApi.DTOs
         /// </summary>
         public bool IsUpdated(IFirestoreDto other)
         {
-            if (CompareStrategy(other) == false) 
-                throw new Exception("Invalid objects. Check only the same objects, before using IsUpdated function use CompareStrategy function to check it.");
+            if (Compare(other) == false) 
+                throw new Exception("Invalid objects. Check only the same objects, before using IsUpdated function use Compare function to check it.");
 
             if (other.GetType() != typeof(ItemDto)) throw new Exception("Invalid type.");
 
