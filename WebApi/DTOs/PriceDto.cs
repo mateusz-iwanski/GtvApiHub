@@ -18,13 +18,13 @@ namespace GtvApiHub.WebApi.DTOs
         public string ItemCode { get; init; }
 
         [FirestoreProperty]
-        public decimal BasePrice { get; init; }
+        public string BasePrice { get; init; }
 
         [FirestoreProperty]
-        public decimal FinalPrice { get; init; }
+        public string FinalPrice { get; init; }
 
         [FirestoreProperty]
-        public double Discount { get; init; }
+        public string Discount { get; init; }
 
         [FirestoreProperty]
         public string Currency { get; init; }
