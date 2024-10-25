@@ -24,6 +24,12 @@ namespace GtvApiHub.WebApi.Services
             _services = services.ItemService;
         }
 
+        /// <summary>
+        /// Get all items from api.
+        /// 
+        /// Default it will return only with LanguageCode.pl
+        /// </summary>
+        /// <returns>IEnumerable<ItemDto></returns>
         public async Task<IEnumerable<ItemDto>> GetAsync()
         {
             var response = await _services.GetAsync();
@@ -33,6 +39,11 @@ namespace GtvApiHub.WebApi.Services
             return listItemDto;
         }
 
+        /// <summary>
+        /// Get all items in the selected language
+        /// </summary>
+        /// <param name="languageCode">LanguageCode </param>
+        /// <returns>IEnumerable<ItemDto</returns>
         public async Task<IEnumerable<ItemDto>> GetAsync(LanguageCode languageCode)
         {
             var response = await _services.GetByLanguageAsync(languageCode.ToString());
