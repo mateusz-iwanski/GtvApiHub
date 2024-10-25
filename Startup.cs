@@ -2,6 +2,7 @@
 using FirebaseManager.Firestore;
 using FirebaseManager.Storage;
 using GtvApiHub.WebApi;
+using GtvApiHub.WebApi.FirebaseManagement;
 using GtvApiHub.WebApi.Services;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -61,12 +62,19 @@ namespace GtvApiHub
             // Add GTV Api services                                    
             services.AddScoped<IApiConfigurationServices, ApiConfigurationServices>();            
             services.AddScoped<ITokenSettingsManager, TokenSettingsManager>();
-            services.AddScoped<IFirestorageFileHandler, FirestorageDtoFileHandler>();            
+            services.AddScoped<IFirestorageFileHandler, FirestorageDtoFileHandler>();
 
             services.AddScoped<IItem, Item>();
             services.AddScoped<IToken, Token>();
             services.AddScoped<IPrice, Price>();
             services.AddScoped<IAttribute, AttributeItem>();
+            services.AddScoped<IPackageType, PackageType>();
+            services.AddScoped<IAlternativeItem, AlternativeItem>();
+            services.AddScoped<IStock, Stock>();
+            services.AddScoped<ICategoryTree, CategoryTree>();
+            services.AddScoped<IPromotion, Promotion>();
+
+            services.AddScoped<GtvFirestoreSyncItemManager>();
         }
     }
 }
