@@ -18,13 +18,26 @@ namespace GtvApiHub.WebApi.Services
             _services = services.AttributeService;
         }
 
+        /// <summary>
+        /// Returns all attributes  
+        /// </summary>
+        /// <remarks>
+        /// Endpoint GetAsync response only Attribute.AttributeType == Property
+        /// so, we need to get all AttributeTypes and merge them.
+        /// </remarks>
+        /// <returns><IEnumerable<AttributeDto></returns>
         public async Task<IEnumerable<AttributeDto>> GetAsync()
         {
-            var response = await _services.GetAsync();
+            List<AttributeDto> sumOfAttributesTypes = new List<AttributeDto>();
 
-            var listItemDto = await response.Content.GetListObjectAsync<AttributeDto>();
+            // get all AttributeTypes and merge them
+            foreach (AttributeType type in Enum.GetValues(typeof(AttributeType)))
+            {
+                var byType = await GetAsync(type);  // get by AttributeType
+                sumOfAttributesTypes.AddRange(byType);
+            }
 
-            return listItemDto;
+            return sumOfAttributesTypes;
         }
 
         public async Task<IEnumerable<AttributeDto>> GetAsync(string itemCode)
