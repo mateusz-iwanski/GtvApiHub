@@ -31,9 +31,12 @@ namespace GtvApiHub.WebApi.DTOs
         public List<PackageTypeDto>? PackageTypes { get; init; }
 
         [FirestoreProperty]
+        public List<AlternativeItemDto> AlternateItems { get; init; }
+
+        [FirestoreProperty]
         public string ItemCode { get; init; }  
 
-        public string CollectionName => "Items";
+        public string CollectionName => "Gtv_Items";
         public string? DocumentUniqueField => ItemCode;
 
         /// <summary>
