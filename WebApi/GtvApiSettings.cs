@@ -24,6 +24,12 @@ namespace GtvApiHub.WebApi
         /// </summary>
         private string? _fileUrlPrefix;
 
+        /// <summary>
+        /// The prefix of the url for Attributes with youtube video type (AttributeType->YtUrl), 
+        /// attribute from api just have the youtube video id. 
+        /// </summary>
+        private string? _ytUrlPrefix;
+
         public string? Url
         {
             get { return _url ?? throw new SettingsException($"In appsettings.json Access->GtvApi->Url not exists"); }
@@ -46,6 +52,12 @@ namespace GtvApiHub.WebApi
         {
             get { return _fileUrlPrefix ?? throw new SettingsException($"In appsettings.json Access->GtvApi->FileUrlPrefix not exists"); }
             set => _fileUrlPrefix = value;
+        }
+
+        public string? YtUrlPrefix
+        {
+            get { return _ytUrlPrefix ?? throw new SettingsException($"In appsettings.json Access->GtvApi->YtUrlPrefix not exists"); }
+            set => _ytUrlPrefix = value;
         }
     }
 }
