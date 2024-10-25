@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace GtvApiHub.WebApi.FirebaseManagement
 {
-    public class GtvFirebaseItemDtoBuilder
+    public class GtvFirestoreItemDtoBuilder
     {
         private FirestoreItemDto _firestoreItemDto { get; set; }
 
@@ -19,7 +19,8 @@ namespace GtvApiHub.WebApi.FirebaseManagement
             List<StockDto> allApiStockDtos,
             List<AttributeDto> allApiAttributeDtos,
             List<CategoryTreeDto> allApiCategoryTreeDtos,
-            List<PackageTypeDto> allApiPackageTypeDtos
+            List<PackageTypeDto> allApiPackageTypeDtos,
+            List<AlternativeItemDto> allApiAlternativeItemDtos
             )
         {
             List<ItemDto> items = allApiItemDtos.Where(x => x.ItemCode == itemCode).ToList();
@@ -28,6 +29,7 @@ namespace GtvApiHub.WebApi.FirebaseManagement
             List<AttributeDto> attributes = allApiAttributeDtos.Where(x => x.ItemCode == itemCode).ToList();
             List<CategoryTreeDto> categoryTrees = allApiCategoryTreeDtos.Where(x => x.ItemCode == itemCode).ToList();
             List<PackageTypeDto> packageTypes = allApiPackageTypeDtos.Where(x => x.ItemCode == itemCode).ToList();
+            List<AlternativeItemDto> alternateItems = allApiAlternativeItemDtos.Where(x => x.ItemCode == itemCode).ToList();
 
             _firestoreItemDto = new FirestoreItemDto()
             {
@@ -37,7 +39,8 @@ namespace GtvApiHub.WebApi.FirebaseManagement
                 Attributes = attributes,
                 CategoryTrees = categoryTrees,
                 PackageTypes = packageTypes,
-                ItemCode = itemCode
+                ItemCode = itemCode,
+                AlternateItems = alternateItems
             };
 
             return _firestoreItemDto;
