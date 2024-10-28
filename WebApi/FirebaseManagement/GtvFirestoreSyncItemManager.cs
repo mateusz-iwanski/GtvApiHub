@@ -149,7 +149,7 @@ namespace GtvApiHub.WebApi.FirebaseManagement
             //await SyncPrice(continueOnError, skipApiNullData);
             //await SyncStock(continueOnError, skipApiNullData);
         }
-
+       
         /// <summary>
         /// Sync Prices between API and Firestore
         /// </summary>
@@ -168,7 +168,7 @@ namespace GtvApiHub.WebApi.FirebaseManagement
 
             _logger.Info("Syncing GtvApi Prices with Firestore ...");
 
-            await syncElementsAsync("Price");
+            await syncElementsAsync("Price", continueOnError: continueOnError, skipApiNullData: skipApiNullData);
 
             _logger.Info("Syncing GtvApi Prices with Firestore completed");
         }
@@ -191,13 +191,15 @@ namespace GtvApiHub.WebApi.FirebaseManagement
 
             _logger.Info("Syncing GtvApi Stocks with Firestore ...");
 
-            await syncElementsAsync("Stocks");            
+            await syncElementsAsync("Stocks", continueOnError: continueOnError, skipApiNullData: skipApiNullData);            
 
             _logger.Info("Syncing GtvApi Stocks with Firestore completed");
         }
 
         /// <summary>
         /// Sync Attributes between API and Firestore
+        /// 
+        /// If attribute is type File, it will upload on the Firebase Storage
         /// </summary>
         /// <param name="continueOnError">If this is true, don't stop if some records contain exceptions. Default is false</param>
         /// <param name="skipApiNullData">If false, override data in Firestore even if null in API. Default is true</param>
@@ -214,19 +216,33 @@ namespace GtvApiHub.WebApi.FirebaseManagement
 
             _logger.Info("Syncing GtvApi Attributes with Firestore ...");
 
-            await syncElementsAsync("Attributes");
-                
-            foreach(var item in _apiItems)
+            await syncElementsAsync("Attributes", continueOnError: continueOnError, skipApiNullData: skipApiNullData);
+
+            foreach (var item in _apiItems)
             {
+
                 foreach (var attribute in item.Attributes)
-                    await _firestorageFileHandler.StoreAsync(
-                        dto: attribute,
-                        fileUrlPrefix: _gtvApiSettings.Value.FileUrlPrefix,
-                        directoryNameOnFirestore: _firebaseApiSettings.Value.FirestoreDirectoryForFileToUpload
-                        );
-            }            
+                {
+                    try
+                    {
+                        await _firestorageFileHandler.StoreAsync(
+                            dto: attribute,
+                            fileUrlPrefix: _gtvApiSettings.Value.FileUrlPrefix,
+                            directoryNameOnFirestore: _firebaseApiSettings.Value.FirestoreDirectoryForFileToUpload
+                            );
+                    }
+                    catch (Exception ex)
+                    {
+                        // Handle the error here, such as logging the error or displaying a message
+                        _logger.Error($"Error occurred while updating {attribute.DocumentUniqueField} with file {attribute.FileHandler}: {ex.Message}");
 
-
+                        if (!continueOnError)
+                        {
+                            throw new FirestoreException($"Error occurred while updating {attribute.DocumentUniqueField} with file {attribute.FileHandler}: {ex.Message}", ex); // Rethrow the exception to stop the execution
+                        }
+                    }
+                }
+            }
             _logger.Info("Syncing GtvApi Attributes with Firestore completed");
         }
 
@@ -248,7 +264,7 @@ namespace GtvApiHub.WebApi.FirebaseManagement
 
             _logger.Info("Syncing GtvApi Package Types with Firestore ...");
 
-            await syncElementsAsync("PackageTypes");            
+            await syncElementsAsync("PackageTypes", continueOnError: continueOnError, skipApiNullData: skipApiNullData);            
 
             _logger.Info("Syncing GtvApi Package Types with Firestore completed");
         }
@@ -271,7 +287,7 @@ namespace GtvApiHub.WebApi.FirebaseManagement
 
             _logger.Info("Syncing GtvApi Alternative Items with Firestore ...");
 
-            await syncElementsAsync("AlternateItems");
+            await syncElementsAsync("AlternateItems", continueOnError: continueOnError, skipApiNullData: skipApiNullData);
 
             _logger.Info("Syncing GtvApi Alternative Items with Firestore completed");
         }
@@ -294,7 +310,7 @@ namespace GtvApiHub.WebApi.FirebaseManagement
 
             _logger.Info("Syncing GtvApi Items with Firestore ...");
 
-            await syncElementsAsync("Item");
+            await syncElementsAsync("Item", continueOnError: continueOnError, skipApiNullData: skipApiNullData);
 
             _logger.Info("Syncing GtvApi Items with Firestore completed");
         }
