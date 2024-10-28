@@ -6,12 +6,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using MurmurHash;
+using MurmurHash.Net;
 
 namespace GtvApiHub.WebApi.DTOs
 {
     [FirestoreData]
     public record FirestoreItemDto : IBaseDto, IResponseDto, IFirestoreDto, IFirestoreItemDto, IFirestoreDtoCompareStrategy
     {
+        [FirestoreProperty]
+        public int Id { get => getId(); }
+
         [FirestoreProperty]
         public List<ItemDto> Item { get; init; }
 
@@ -37,7 +42,7 @@ namespace GtvApiHub.WebApi.DTOs
         public string ItemCode { get; init; }  
 
         public string CollectionName => "Gtv_Items";
-        public string? DocumentUniqueField => ItemCode;
+        public string? DocumentUniqueField => Id.ToString();
 
         /// <summary>
         /// Compare every records and list with records. If any of them are different, return false.
@@ -67,10 +72,7 @@ namespace GtvApiHub.WebApi.DTOs
                 // raise an error so return false
                 return false;
             }
-
-            
         }
-
 
         /// <summary>
         /// Compare the same type of objects IFirestoreDto.
@@ -108,6 +110,19 @@ namespace GtvApiHub.WebApi.DTOs
             if ((FirestoreItemDto)other == this) return false;  // the same so is not updated
 
             return true;
+        }
+
+        /// <summary>
+        /// Get generated id by unique Item Code value.
+        /// 
+        /// Objects in Firestore are stored without an ID, so it will generate a unique object ID.
+        /// </summary>
+        /// <returns></returns>
+        private int getId()
+        {
+            uint hash = MurmurHash3.Hash32(System.Text.Encoding.UTF8.GetBytes(ItemCode), 0);
+            int id = BitConverter.ToInt32(BitConverter.GetBytes(hash), 0);
+            return id == int.MinValue ? int.MaxValue : Math.Abs(id);
         }
 
         /// <summary>
