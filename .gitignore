@@ -3,6 +3,10 @@
 ##
 ## Get latest from https://github.com/github/gitignore/blob/master/VisualStudio.gitignore
 
+# Custom
+appsettings.json
+gtvcloud-b6fcb-firebase-adminsdk-ik2f6-f31318d9b7.json
+
 # User-specific files
 *.rsuser
 *.suo
