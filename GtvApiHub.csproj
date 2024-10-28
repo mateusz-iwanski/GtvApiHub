@@ -8,17 +8,23 @@
   </PropertyGroup>
 
   <ItemGroup>    
-    <None Remove="gtvcloud-b6fcb-firebase-adminsdk-ik2f6-f31318d9b7.json" />
+    <None Remove="gtvcloud-b6fcb-firebase-adminsdk-ik2f6-f31318d9b7.json" />    
+    <None Remove="gtvcloud-b6fcb_personal.json" />    
+    <None Remove="gtvcloudtest1StolargoStudiogmail.json" />
   </ItemGroup>
 
   <ItemGroup>    
-    <Content Include="gtvcloud-b6fcb-firebase-adminsdk-ik2f6-f31318d9b7.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    <Content Include="gtvcloud-b6fcb_personal.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>    
+    <Content Include="gtvcloudtest1StolargoStudiogmail.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Google.Cloud.Firestore" Version="3.9.0" />
+    <PackageReference Include="MurmurHash.Net" Version="0.0.2" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="NLog" Version="5.3.4" />
     <PackageReference Include="NLog.Web" Version="5.3.14" />
