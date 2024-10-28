@@ -22,5 +22,7 @@ namespace GtvApiHub.WebApi.DTOs
 
         public string CollectionName { get => "ItemStock"; }
         public string DocumentUniqueField { get => "Stock_" + WarehouseCode + "_" + ItemCode; }
+
+        public WarehouseCode Warehouse => Enum.Parse<WarehouseCode>(WarehouseCode);
     }
 }
