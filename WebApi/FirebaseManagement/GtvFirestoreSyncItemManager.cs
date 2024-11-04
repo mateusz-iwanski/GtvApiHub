@@ -69,28 +69,47 @@ namespace GtvApiHub.WebApi.FirebaseManagement
         /// <summary>
         /// Fill in data from API and Firestore
         /// </summary>        
-        private async Task FillInData()
+        private async Task FillInDataAsync()
         {
             if (_apiItems == null || _firestoreItems == null)
             {
                 _apiItems = await getAllFromApiAsync();
-                _firestoreItems = await GetAllFromFirestoreAsync(_apiItems);
+                //_firestoreItems = await GetAllFromFirestoreAsync(_apiItems);
+                _firestoreItems = await GetAllFirestoreDocumentsInCollectionAsync<FirestoreItemDto>("Gtv_Items");
             }
+        }
+
+        /// <summary>
+        /// Create contsnts for storing the id documents with the item code inside documents.
+        /// </summary>
+        /// <returns></returns>
+        public async Task CreateContents(List<FirestoreItemDto> items)
+        {
+            await FillInDataAsync();
+            //if (_firestoreItems == null)
+            //    _firestoreItems = await GetAllFromFirestoreAsync(_apiItems);
+            //_firestoreItems = await GetAllFirestoreDocumentsInCollectionAsync<FirestoreItemDto>("Gtv_Items");
+            var Content = new FirestoreContentsDtoBuilder().Build(items);
+            // first delete
+            await FirestoreService.DeleteDtoAsync(Content);
+            // add new one
+            await FirestoreService.InsertDtoAsync(Content);
         }
 
         public async Task AddNewOneTemp()
         {
-            await FillInData();
+            await FillInDataAsync();
 
             var itemsWithFileHandler = _apiItems.Where(item => item.Attributes != null);
 
             //foreach (var a in itemsWithFileHandler)
             //    if (a.Attributes.Any(attr => attr.AttributeType == "File")) Console.WriteLine(a + "-----" + a.Attributes.Any(attr => attr.AttributeType == "File"));
 
-            var k = itemsWithFileHandler.Where(x => x.Attributes.Any(attr => attr.AttributeType == "File")).ToList();
+            var k = itemsWithFileHandler.Where(x => x.Attributes.Any(attr => attr.AttributeType == AttributeType.File.ToString())).ToList();
 
             for (int i = 0; i < 5; i++)
                 await AddDtoFirestore(k[i], _firestoreItems);
+            
         }
 
         /// <summary>
@@ -101,9 +120,9 @@ namespace GtvApiHub.WebApi.FirebaseManagement
         /// <exception cref="FirestoreException">Raise when is a problem with adding object to Firestore</exception>
         public async Task AddNewOne(bool continueOnError = false)
         {
-            await FillInData();
+            await FillInDataAsync();
 
-            _logger.Info("Start adding new GtvApi Item to Firestore ...");
+            _logger.Info("Start adding new GtvApi Items to Firestore ...");
 
             foreach (var itemFromApi in _apiItems)
             {
@@ -125,9 +144,13 @@ namespace GtvApiHub.WebApi.FirebaseManagement
             }
 
             //for (int i = 0; i < 5; i++)
-            //    await AddDtoFirestore(_apiItems[i], _apiItems, _firestoreItems);
+            //    await AddDtoFirestore(_apiItems[i], _apiItems, _firestoreItems);            
 
-            _logger.Info("GtvApi new Item adding to Firestore completed");
+            _logger.Info("GtvApi new Items adding to Firestore completed");
+            
+            // create new contents
+            await CreateContents(_apiItems);
+            _logger.Info("GtvApi create new Contents");
         }
 
         /// <summary>
@@ -137,7 +160,7 @@ namespace GtvApiHub.WebApi.FirebaseManagement
         /// </summary>
         public async override Task SyncFirestoreAsync(bool continueOnError = false, bool skipApiNullData = true)
         {
-            await FillInData();
+            await FillInDataAsync();
 
             await AddNewOne(continueOnError);
 
@@ -164,7 +187,7 @@ namespace GtvApiHub.WebApi.FirebaseManagement
         /// </remarks>
         public async Task SyncPrice(bool continueOnError = false, bool skipApiNullData = true)
         {
-            await FillInData();
+            await FillInDataAsync();
 
             _logger.Info("Syncing GtvApi Prices with Firestore ...");
 
@@ -187,7 +210,7 @@ namespace GtvApiHub.WebApi.FirebaseManagement
         /// </remarks>
         public async Task SyncStock(bool continueOnError = false, bool skipApiNullData = true)
         {
-            await FillInData();
+            await FillInDataAsync();
 
             _logger.Info("Syncing GtvApi Stocks with Firestore ...");
 
@@ -212,7 +235,7 @@ namespace GtvApiHub.WebApi.FirebaseManagement
         /// </remarks>
         public async Task SyncAttribute(bool continueOnError = false, bool skipApiNullData = true)
         {
-            await FillInData();
+            await FillInDataAsync();
 
             _logger.Info("Syncing GtvApi Attributes with Firestore ...");
 
@@ -260,7 +283,7 @@ namespace GtvApiHub.WebApi.FirebaseManagement
         /// </remarks>
         public async Task SyncPackageType(bool continueOnError = false, bool skipApiNullData = true)
         {
-            await FillInData();
+            await FillInDataAsync();
 
             _logger.Info("Syncing GtvApi Package Types with Firestore ...");
 
@@ -283,7 +306,7 @@ namespace GtvApiHub.WebApi.FirebaseManagement
         /// </remarks>
         public async Task SyncAlternativeItem(bool continueOnError = false, bool skipApiNullData = true)
         {
-            await FillInData();
+            await FillInDataAsync();
 
             _logger.Info("Syncing GtvApi Alternative Items with Firestore ...");
 
@@ -306,7 +329,7 @@ namespace GtvApiHub.WebApi.FirebaseManagement
         /// </remarks>
         public async Task SyncItem(bool continueOnError = false, bool skipApiNullData = true)
         {
-            await FillInData();
+            await FillInDataAsync();
 
             _logger.Info("Syncing GtvApi Items with Firestore ...");
 
