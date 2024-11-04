@@ -106,6 +106,7 @@ namespace GtvApiHub
 
         protected async Task AddDtoFirestore<T>(
             IFirestoreDtoCompareStrategy itemDtoFromApi,
+            //List<T> apiItems,
             List<T> firebaseItems
             ) where T : IFirestoreDto
         {
