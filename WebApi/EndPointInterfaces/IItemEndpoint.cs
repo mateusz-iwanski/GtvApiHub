@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace GtvApiHub.WebApi.EndPointInterfaces
 {
     /// <summary>
-    /// Item interface.
+    /// GtvItem interface.
     /// 
     /// Represents product.
     /// </summary>
