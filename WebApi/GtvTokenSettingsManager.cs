@@ -6,26 +6,26 @@ using Microsoft.Extensions.Options;
 using Newtonsoft.Json.Linq;
 
 /// <summary>
-/// Token settings manager.
+/// GtvToken settings manager.
 /// 
 /// Class responsible for save and get token settings from appsettings.json.
 /// </summary>
 /// <remarks>
-/// In appsettings.json you must have a TokenSettings section.  
+/// In appsettings.json you must have a GtvTokenSettings section.  
 /// 
-/// "TokenSettings": {
+/// "GtvTokenSettings": {
 ///     "SecretToken": "",
 ///     "ExpiresIn": ""
 /// }
 /// </remarks>
-public class TokenSettingsManager : ITokenSettingsManager
+public class GtvTokenSettingsManager : IGtvTokenSettingsManager
 {
     private readonly string _filePath = "appsettings.json";
 
     // Monitor for token settings. File can change and this interface will be notified.
-    private readonly IOptionsMonitor<TokenSettings> _tokenSettingsMonitor;
+    private readonly IOptionsMonitor<GtvTokenSettings> _tokenSettingsMonitor;
 
-    public TokenSettingsManager(IOptionsMonitor<TokenSettings> tokenSettingsMonitor)
+    public GtvTokenSettingsManager(IOptionsMonitor<GtvTokenSettings> tokenSettingsMonitor)
     {
         _tokenSettingsMonitor = tokenSettingsMonitor;
     }
@@ -39,7 +39,7 @@ public class TokenSettingsManager : ITokenSettingsManager
         var json = File.ReadAllText(_filePath);
         var jsonObj = JObject.Parse(json);
 
-        var tokenSettings = jsonObj["TokenSettings"] ?? 
+        var tokenSettings = jsonObj["GtvApiTokenSettings"] ?? 
             throw new SettingsException("The TokenSettings section must exist in the appsettings.json file");
 
         tokenSettings["SecretToken"] = tokenResponseDto.AccessToken;
@@ -51,10 +51,10 @@ public class TokenSettingsManager : ITokenSettingsManager
     /// <summary>
     /// Get token settings from appsettings.json
     /// </summary>
-    /// <returns>TokenSettings</returns>
-    public TokenSettings GetTokenSettings()
+    /// <returns>GtvTokenSettings</returns>
+    public GtvTokenSettings GetTokenSettings()
     {
-        return new TokenSettings
+        return new GtvTokenSettings
         {
             SecretToken = _tokenSettingsMonitor.CurrentValue.SecretToken,
             ExpiresIn = _tokenSettingsMonitor.CurrentValue.ExpiresIn

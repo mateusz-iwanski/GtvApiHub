@@ -8,11 +8,11 @@ using System.Threading.Tasks;
 namespace GtvApiHub.WebApi
 {
     /// <summary>
-    /// The class with the settings for the GtvApi Token.
+    /// The class with the settings for the GtvApi GtvToken.
     /// 
     /// Used to bind data from the appsettings.json file.
     /// </summary>
-    public class TokenSettings
+    public class GtvTokenSettings
     {
         private string? _secretToken { get; set; }
         private DateTime? _expiresIn { get; set; }

@@ -35,7 +35,7 @@ namespace GtvApiHub.WebApi
             _serviceProvider = serviceProvider;
 
             //using var scope = serviceProvider.CreateScope();
-            //var token = scope.ServiceProvider.GetRequiredService<IToken>();
+            //var token = scope.ServiceProvider.GetRequiredService<IGtvToken>();
 
             customHandler = new CustomHttpClientHandler(httpClientHandler, logger, serviceProvider);
 

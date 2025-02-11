@@ -15,7 +15,7 @@ namespace GtvApiHub.WebApi
     /// <summary>
     /// Refit configuration of the specified interface.
     /// </summary>
-    public interface IApiConfigurationServices
+    public interface IGtvApiConfigurationServices
     {
         ITokenEndPoint TokenService { get; }
         IItemEndpoint ItemService { get; }
@@ -28,7 +28,7 @@ namespace GtvApiHub.WebApi
         IPromotionEndPoint PromotionService { get; }
     }
 
-    public class ApiConfigurationServices : ApiConfiguration, IApiConfigurationServices
+    public class GtvApiConfigurationServices : ApiConfiguration, IGtvApiConfigurationServices
     {
         public ITokenEndPoint TokenService { get; private set; }
         public IItemEndpoint ItemService { get; private set; }
@@ -40,7 +40,7 @@ namespace GtvApiHub.WebApi
         public ICategoryTreeEndPoint CategoryTreeService { get; private set; }
         public IPromotionEndPoint PromotionService { get; private set; }
 
-        public ApiConfigurationServices(IOptions<GtvApiSettings> gtvApiSettings, IServiceProvider serviceProvider) : base(gtvApiSettings, serviceProvider)
+        public GtvApiConfigurationServices(IOptions<GtvApiSettings> gtvApiSettings, IServiceProvider serviceProvider) : base(gtvApiSettings, serviceProvider)
         {
             TokenService = RestService.For<ITokenEndPoint>(httpClient);
             ItemService = RestService.For<IItemEndpoint>(httpClient);

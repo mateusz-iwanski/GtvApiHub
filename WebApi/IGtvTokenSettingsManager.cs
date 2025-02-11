@@ -1,8 +1,8 @@
 ﻿using GtvApiHub.WebApi;
 using GtvApiHub.WebApi.Objects;
 
-public interface ITokenSettingsManager
+public interface IGtvTokenSettingsManager
 {
-    TokenSettings GetTokenSettings();
+    GtvTokenSettings GetTokenSettings();
     void UpdateTokenSettings(TokenResponseDto tokenResponseDto);
 }
