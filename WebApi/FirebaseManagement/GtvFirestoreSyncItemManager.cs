@@ -14,7 +14,7 @@ namespace GtvApiHub.WebApi.FirebaseManagement
     /// <summary>
     /// GtvFirestoreSyncItemManager is responsible for syncing items between GTV API and Firestore
     /// 
-    /// Firestore Items collection has all data as Price, Stocks, Attributes etc. in one document.
+    /// Firestore Items collection has all data as GtvPrice, Stocks, Attributes etc. in one document.
     /// Syncing object is FirestoreItemDto, by this object schema it's save in Firestore
     /// </summary>
     public class GtvFirestoreSyncItemManager : FirestoreSyncManager, IFirestoreManager
@@ -22,14 +22,14 @@ namespace GtvApiHub.WebApi.FirebaseManagement
         private List<FirestoreItemDto> _apiItems { get; set; }
         private List<FirestoreItemDto> _firestoreItems { get; set; }
 
-        private readonly IItem _itemService;
-        private readonly IPrice _priceService;
-        private readonly IStock _stockService;
-        private readonly IAttribute _attributeService;
-        private readonly ICategoryTree _categoryTreeService;
-        private readonly IPackageType _packageTypeService;
-        private readonly IAlternativeItem _alternativeItem;
-        private readonly IFirestorageFileHandler _firestorageFileHandler;
+        private readonly IGtvItem _itemService;
+        private readonly IGtvPrice _priceService;
+        private readonly IGtvStockService _stockService;
+        private readonly IGtvAttribute _attributeService;
+        private readonly IGtvCategoryTree _categoryTreeService;
+        private readonly IGtvPackageType _packageTypeService;
+        private readonly IGtvAlternativeItem _alternativeItem;
+        private readonly IGtvFirestorageFileHandler _firestorageFileHandler;
         private readonly IOptions<GtvApiSettings> _gtvApiSettings;
         private readonly IOptions<FirebaseSettings> _firebaseApiSettings;
 
@@ -40,15 +40,15 @@ namespace GtvApiHub.WebApi.FirebaseManagement
         /// <param name="firestoreService"></param>
         /// <param name="logger"></param>
         public GtvFirestoreSyncItemManager(
-            IItem itemService,
-            IPrice priceService,
-            IStock stockService,
-            IAttribute attributeService,
-            ICategoryTree categoryTreeService,
-            IPackageType packageTypeService,
+            IGtvItem itemService,
+            IGtvPrice priceService,
+            IGtvStockService stockService,
+            IGtvAttribute attributeService,
+            IGtvCategoryTree categoryTreeService,
+            IGtvPackageType packageTypeService,
             IFirestoreService firestoreService,
-            IAlternativeItem alternativeItem,
-            IFirestorageFileHandler firestorageFileHandler,
+            IGtvAlternativeItem alternativeItem,
+            IGtvFirestorageFileHandler firestorageFileHandler,
             IOptions<GtvApiSettings> gtvApiSettings,
             IOptions<FirebaseSettings> firebaseApiSettings,
             ILogger logger)
@@ -167,7 +167,7 @@ namespace GtvApiHub.WebApi.FirebaseManagement
             //for (int i = 0; i < 5; i++)
             //    await AddDtoFirestore(_apiItems[i], _apiItems, _firestoreItems);
 
-            _logger.Info("GtvApi new Item add with Firestore completed");
+            _logger.Info("GtvApi new GtvItem add with Firestore completed");
 
             //await SyncPrice(continueOnError, skipApiNullData);
             //await SyncStock(continueOnError, skipApiNullData);
@@ -182,7 +182,7 @@ namespace GtvApiHub.WebApi.FirebaseManagement
         /// If the document does not exist in Firestore, it will be added, if it is different, it will be updated.
         /// If the data in the API is null and skipApiNullData is false, it will be updated to null in Firestore even if the data exists,  
         /// so if there is data in Firestore, it will be deleted. If there is a problem on the API site with the response data, 
-        /// you can disallow the data to be overwritten with a null value. You can adopt a strategy that we can overwrite Stock even if null, 
+        /// you can disallow the data to be overwritten with a null value. You can adopt a strategy that we can overwrite GtvStockService even if null, 
         /// but not e.g. Attributes, if there is any data, it means that they were rather correct, so why delete them during a API has problem with responses data?
         /// </remarks>
         public async Task SyncPrice(bool continueOnError = false, bool skipApiNullData = true)
@@ -191,7 +191,7 @@ namespace GtvApiHub.WebApi.FirebaseManagement
 
             _logger.Info("Syncing GtvApi Prices with Firestore ...");
 
-            await syncElementsAsync("Price", continueOnError: continueOnError, skipApiNullData: skipApiNullData);
+            await syncElementsAsync("GtvPrice", continueOnError: continueOnError, skipApiNullData: skipApiNullData);
 
             _logger.Info("Syncing GtvApi Prices with Firestore completed");
         }
@@ -205,7 +205,7 @@ namespace GtvApiHub.WebApi.FirebaseManagement
         /// If the document does not exist in Firestore, it will be added, if it is different, it will be updated.
         /// If the data in the API is null and skipApiNullData is false, it will be updated to null in Firestore even if the data exists,  
         /// so if there is data in Firestore, it will be deleted. If there is a problem on the API site with the response data, 
-        /// you can disallow the data to be overwritten with a null value. You can adopt a strategy that we can overwrite Stock even if null, 
+        /// you can disallow the data to be overwritten with a null value. You can adopt a strategy that we can overwrite GtvStockService even if null, 
         /// but not e.g. Attributes, if there is any data, it means that they were rather correct, so why delete them during a API has problem with responses data?
         /// </remarks>
         public async Task SyncStock(bool continueOnError = false, bool skipApiNullData = true)
@@ -230,7 +230,7 @@ namespace GtvApiHub.WebApi.FirebaseManagement
         /// If the document does not exist in Firestore, it will be added, if it is different, it will be updated.
         /// If the data in the API is null and skipApiNullData is false, it will be updated to null in Firestore even if the data exists,  
         /// so if there is data in Firestore, it will be deleted. If there is a problem on the API site with the response data, 
-        /// you can disallow the data to be overwritten with a null value. You can adopt a strategy that we can overwrite Stock even if null, 
+        /// you can disallow the data to be overwritten with a null value. You can adopt a strategy that we can overwrite GtvStockService even if null, 
         /// but not e.g. Attributes, if there is any data, it means that they were rather correct, so why delete them during a API has problem with responses data?
         /// </remarks>
         public async Task SyncAttribute(bool continueOnError = false, bool skipApiNullData = true)
@@ -278,7 +278,7 @@ namespace GtvApiHub.WebApi.FirebaseManagement
         /// If the document does not exist in Firestore, it will be added, if it is different, it will be updated.
         /// If the data in the API is null and skipApiNullData is false, it will be updated to null in Firestore even if the data exists,  
         /// so if there is data in Firestore, it will be deleted. If there is a problem on the API site with the response data, 
-        /// you can disallow the data to be overwritten with a null value. You can adopt a strategy that we can overwrite Stock even if null, 
+        /// you can disallow the data to be overwritten with a null value. You can adopt a strategy that we can overwrite GtvStockService even if null, 
         /// but not e.g. Attributes, if there is any data, it means that they were rather correct, so why delete them during a API has problem with responses data?
         /// </remarks>
         public async Task SyncPackageType(bool continueOnError = false, bool skipApiNullData = true)
@@ -301,7 +301,7 @@ namespace GtvApiHub.WebApi.FirebaseManagement
         /// If the document does not exist in Firestore, it will be added, if it is different, it will be updated.
         /// If the data in the API is null and skipApiNullData is false, it will be updated to null in Firestore even if the data exists,  
         /// so if there is data in Firestore, it will be deleted. If there is a problem on the API site with the response data, 
-        /// you can disallow the data to be overwritten with a null value. You can adopt a strategy that we can overwrite Stock even if null, 
+        /// you can disallow the data to be overwritten with a null value. You can adopt a strategy that we can overwrite GtvStockService even if null, 
         /// but not e.g. Attributes, if there is any data, it means that they were rather correct, so why delete them during a API has problem with responses data?
         /// </remarks>
         public async Task SyncAlternativeItem(bool continueOnError = false, bool skipApiNullData = true)
@@ -316,7 +316,7 @@ namespace GtvApiHub.WebApi.FirebaseManagement
         }
 
         /// <summary>
-        /// Sync Item between API and Firestore
+        /// Sync GtvItem between API and Firestore
         /// </summary>
         /// <param name="continueOnError">If this is true, don't stop if some records contain exceptions. Default is false</param>
         /// <param name="skipApiNullData">If false, override data in Firestore even if null in API. Default is true</param>
@@ -324,7 +324,7 @@ namespace GtvApiHub.WebApi.FirebaseManagement
         /// If the document does not exist in Firestore, it will be added, if it is different, it will be updated.
         /// If the data in the API is null and skipApiNullData is false, it will be updated to null in Firestore even if the data exists,  
         /// so if there is data in Firestore, it will be deleted. If there is a problem on the API site with the response data, 
-        /// you can disallow the data to be overwritten with a null value. You can adopt a strategy that we can overwrite Stock even if null, 
+        /// you can disallow the data to be overwritten with a null value. You can adopt a strategy that we can overwrite GtvStockService even if null, 
         /// but not e.g. Attributes, if there is any data, it means that they were rather correct, so why delete them during a API has problem with responses data?
         /// </remarks>
         public async Task SyncItem(bool continueOnError = false, bool skipApiNullData = true)
@@ -333,7 +333,7 @@ namespace GtvApiHub.WebApi.FirebaseManagement
 
             _logger.Info("Syncing GtvApi Items with Firestore ...");
 
-            await syncElementsAsync("Item", continueOnError: continueOnError, skipApiNullData: skipApiNullData);
+            await syncElementsAsync("GtvItem", continueOnError: continueOnError, skipApiNullData: skipApiNullData);
 
             _logger.Info("Syncing GtvApi Items with Firestore completed");
         }
@@ -405,7 +405,7 @@ namespace GtvApiHub.WebApi.FirebaseManagement
         /// If the document does not exist in Firestore, it will be added, if it is different, it will be updated.
         /// If the data in the API is null and skipApiNullData is false, it will be updated to null in Firestore even if the data exists,  
         /// so if there is data in Firestore, it will be deleted. If there is a problem on the API site with the response data, 
-        /// you can disallow the data to be overwritten with a null value. You can adopt a strategy that we can overwrite Stock even if null, 
+        /// you can disallow the data to be overwritten with a null value. You can adopt a strategy that we can overwrite GtvStockService even if null, 
         /// but not e.g. Attributes, if there is any data, it means that they were rather correct, so why delete them during a API has problem with responses data?
         /// </remarks>
         private async Task syncElementsAsync(string nameOfObjectToSync, bool continueOnError = false, bool skipApiNullData = true)
