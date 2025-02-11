@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 namespace GtvApiHub.WebApi.Objects
 {
     /// <summary>
-    /// Token request object.
+    /// GtvToken request object.
     /// </summary>
     /// <param name="expires_in">Date when token expires</param>
     public record TokenResponseDto
