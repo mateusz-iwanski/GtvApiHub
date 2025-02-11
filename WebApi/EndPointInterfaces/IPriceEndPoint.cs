@@ -12,7 +12,7 @@ namespace GtvApiHub.WebApi.EndPointInterfaces
         [Get("/odata/price")]
         Task<HttpResponseMessage> GetAsync();
 
-        [Get("/odata/Price?$filter=ItemCode eq '{ItemCode}'")]
+        [Get("/odata/price?$filter=ItemCode eq '{ItemCode}'")]
         Task<HttpResponseMessage> GetByItemCodeAsync([AliasAs("ItemCode")] string ItemCode);
     }
 }
