@@ -9,11 +9,11 @@ using System.Threading.Tasks;
 
 namespace GtvApiHub.WebApi.Services
 {
-    public class Promotion : IPromotion
+    public class GtvPromotion : IGtvPromotion
     {
         private readonly IPromotionEndPoint _services;
 
-        public Promotion(IApiConfigurationServices services)
+        public GtvPromotion(IGtvApiConfigurationServices services)
         {
             _services = services.PromotionService;
         }

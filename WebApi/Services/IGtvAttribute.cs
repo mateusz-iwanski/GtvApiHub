@@ -2,7 +2,7 @@
 
 namespace GtvApiHub.WebApi.Services
 {
-    public interface IAttribute
+    public interface IGtvAttribute
     {
         Task<IEnumerable<AttributeDto>> GetAsync();
         Task<IEnumerable<AttributeDto>> GetAsync(string itemCode);

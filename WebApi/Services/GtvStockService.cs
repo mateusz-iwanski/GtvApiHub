@@ -9,11 +9,11 @@ using System.Threading.Tasks;
 
 namespace GtvApiHub.WebApi.Services
 {
-    public class Stock : IStock
+    public class GtvStockService : IGtvStockService
     {
         private readonly IStockEndPoint _services;
 
-        public Stock(IApiConfigurationServices services)
+        public GtvStockService(IGtvApiConfigurationServices services)
         {
             _services = services.StockService;
         }

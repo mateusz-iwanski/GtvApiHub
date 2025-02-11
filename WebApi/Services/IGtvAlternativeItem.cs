@@ -2,7 +2,7 @@
 
 namespace GtvApiHub.WebApi.Services
 {
-    public interface IAlternativeItem
+    public interface IGtvAlternativeItem
     {
         Task<IEnumerable<AlternativeItemDto>> GetAsync();
         Task<IEnumerable<AlternativeItemDto>> GetAsync(string baseItemCode);

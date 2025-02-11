@@ -2,7 +2,7 @@
 
 namespace GtvApiHub.WebApi.Services
 {
-    public interface ICategoryTree
+    public interface IGtvCategoryTree
     {
         Task<IEnumerable<CategoryTreeDto>> GetAsync();
         Task<IEnumerable<CategoryTreeDto>> GetAsync(string itemCode);

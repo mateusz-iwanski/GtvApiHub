@@ -2,7 +2,7 @@
 
 namespace GtvApiHub.WebApi.Services
 {
-    public interface IPrice
+    public interface IGtvPrice
     {
         Task<IEnumerable<PriceDto>> GetAsync();
         Task<IEnumerable<PriceDto>> GetAsync(string itemCode);

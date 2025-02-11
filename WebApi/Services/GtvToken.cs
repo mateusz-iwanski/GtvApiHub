@@ -14,22 +14,22 @@ using System.Threading.Tasks;
 namespace GtvApiHub.WebApi.Services
 {
     /// <summary>
-    /// Token class is responsible for getting the token from the API.
+    /// GtvToken class is responsible for getting the token from the API.
     /// 
     /// The token has an expiration date. If the token has expired, 
     /// a new one is requested and saved in the application settings, 
     /// if not expired, token is returned from settings.
     /// If the token is not in the settings, a new one is requested.
     /// </summary>
-    public class Token : IToken
+    public class GtvToken : IGtvToken
     {
         private readonly ITokenEndPoint _tokenService;
-        private readonly ITokenSettingsManager _tokenSettingsManager;
+        private readonly IGtvTokenSettingsManager _tokenSettingsManager;
 
         private readonly string _username;
         private readonly string _password;
 
-        public Token(IApiConfigurationServices services, IOptions<GtvApiSettings> gtvApiSettings, ITokenSettingsManager tokenSettingsManager)
+        public GtvToken(IGtvApiConfigurationServices services, IOptions<GtvApiSettings> gtvApiSettings, IGtvTokenSettingsManager tokenSettingsManager)
         {
             _tokenService = services.TokenService;
             _tokenSettingsManager = tokenSettingsManager;

@@ -2,7 +2,7 @@
 
 namespace GtvApiHub.WebApi.Services
 {
-    public interface IItem
+    public interface IGtvItem
     {
         Task<IEnumerable<ItemDto>> GetAsync();
         Task<IEnumerable<ItemDto>> GetAsync(LanguageCode languageCode);

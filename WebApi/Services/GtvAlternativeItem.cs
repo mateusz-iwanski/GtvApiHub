@@ -9,11 +9,11 @@ using System.Threading.Tasks;
 
 namespace GtvApiHub.WebApi.Services
 {
-    public class AlternativeItem : IAlternativeItem
+    public class GtvAlternativeItem : IGtvAlternativeItem
     {
         private readonly IAlternativeItemEndPoint _services;
 
-        public AlternativeItem(IApiConfigurationServices services)
+        public GtvAlternativeItem(IGtvApiConfigurationServices services)
         {
             _services = services.AlternativeItemService;
         }

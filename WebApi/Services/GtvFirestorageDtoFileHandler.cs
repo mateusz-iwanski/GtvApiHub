@@ -17,15 +17,15 @@ using NLog;
 namespace GtvApiHub.WebApi.Services
 {
     /// <summary>
-    /// FirestorageDtoFileHandler copy file from url to local directory and upload to Firebase Storage.
+    /// GtvFirestorageDtoFileHandler copy file from url to local directory and upload to Firebase Storage.
     /// </summary>
-    public class FirestorageDtoFileHandler : IFirestorageFileHandler
+    public class GtvFirestorageDtoFileHandler : IGtvFirestorageFileHandler
     {
         private readonly IFirestorageService _firestorageService;
         private readonly IOptions<FirebaseSettings> _firebaseSettings;
         private readonly ILogger _logger;
 
-        public FirestorageDtoFileHandler(
+        public GtvFirestorageDtoFileHandler(
             IFirestorageService firestorageService, 
             IOptions<FirebaseSettings> settings, 
             ILogger logger)

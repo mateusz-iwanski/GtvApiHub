@@ -15,11 +15,11 @@ namespace GtvApiHub.WebApi.Services
     /// <summary>
     /// Represents a collection of elements in the GtvApi service
     /// </summary>
-    public class Item : IItem
+    public class GtvItem : IGtvItem
     {
         private readonly IItemEndpoint _services;
 
-        public Item(IApiConfigurationServices services)
+        public GtvItem(IGtvApiConfigurationServices services)
         {
             _services = services.ItemService;
         }

@@ -9,11 +9,11 @@ using System.Threading.Tasks;
 
 namespace GtvApiHub.WebApi.Services
 {
-    public class CategoryTree : ICategoryTree
+    public class GtvCategoryTree : IGtvCategoryTree
     {
         private readonly ICategoryTreeEndPoint _services;
 
-        public CategoryTree(IApiConfigurationServices services)
+        public GtvCategoryTree(IGtvApiConfigurationServices services)
         {
             _services = services.CategoryTreeService;
         }

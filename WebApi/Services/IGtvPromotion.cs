@@ -2,7 +2,7 @@
 
 namespace GtvApiHub.WebApi.Services
 {
-    public interface IPromotion
+    public interface IGtvPromotion
     {
         Task<IEnumerable<PromotionDto>> GetAsync();
     }

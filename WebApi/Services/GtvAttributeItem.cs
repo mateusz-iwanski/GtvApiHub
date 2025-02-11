@@ -9,11 +9,11 @@ using System.Threading.Tasks;
 
 namespace GtvApiHub.WebApi.Services
 {
-    public class AttributeItem : IAttribute
+    public class GtvAttributeItem : IGtvAttribute
     {
         private readonly IAttributeEndPoint _services;
 
-        public AttributeItem(IApiConfigurationServices services)
+        public GtvAttributeItem(IGtvApiConfigurationServices services)
         {
             _services = services.AttributeService;
         }

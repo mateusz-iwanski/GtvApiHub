@@ -2,7 +2,7 @@
 
 namespace GtvApiHub.WebApi.Services
 {
-    public interface IPackageType
+    public interface IGtvPackageType
     {
         Task<IEnumerable<PackageTypeDto>> GetAsync();
         Task<IEnumerable<PackageTypeDto>> GetAsync(string itemCode);

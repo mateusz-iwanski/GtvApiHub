@@ -2,7 +2,7 @@
 
 namespace GtvApiHub.WebApi.Services
 {
-    public interface IToken
+    public interface IGtvToken
     {
         Task<TokenResponseDto> GetTokenAsync();
     }

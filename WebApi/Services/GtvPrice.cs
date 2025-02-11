@@ -13,11 +13,11 @@ namespace GtvApiHub.WebApi.Services
     /// <summary>
     /// Represents a price collection in the GtvApi service
     /// </summary>
-    public class Price : IPrice
+    public class GtvPrice : IGtvPrice
     {
         private readonly IPriceEndPoint _services;
 
-        public Price(IApiConfigurationServices services)
+        public GtvPrice(IGtvApiConfigurationServices services)
         {
             _services = services.PriceService;
         }

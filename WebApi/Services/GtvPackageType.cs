@@ -10,11 +10,11 @@ using System.Threading.Tasks;
 
 namespace GtvApiHub.WebApi.Services
 {
-    public class PackageType : IPackageType
+    public class GtvPackageType : IGtvPackageType
     {
         private readonly IPackageTypeEndPoint _services;
 
-        public PackageType(IApiConfigurationServices services)
+        public GtvPackageType(IGtvApiConfigurationServices services)
         {
             _services = services.PackageTypeService;
         }
@@ -31,7 +31,7 @@ namespace GtvApiHub.WebApi.Services
         /// <summary>
         /// Get default package type by item code
         /// </summary>
-        /// <param name="itemCode">Item code</param>
+        /// <param name="itemCode">GtvItem code</param>
         /// <returns>IEnumerable<PackageTypeDto>></returns>
         public async Task<IEnumerable<PackageTypeDto>> GetAsync(string itemCode)
         {
