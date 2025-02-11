@@ -22,7 +22,7 @@ namespace GtvApiHub.Helpers
     {
 
         private readonly ILogger _logger;
-        private readonly IToken _token;
+        private readonly IGtvToken _token;
 
         private readonly IServiceProvider _serviceProvider;
 
@@ -41,7 +41,7 @@ namespace GtvApiHub.Helpers
             if (request.RequestUri.AbsolutePath != "/connect/token")
             {
                 using var scope = _serviceProvider.CreateScope();
-                var tokenService = scope.ServiceProvider.GetRequiredService<IToken>();
+                var tokenService = scope.ServiceProvider.GetRequiredService<IGtvToken>();
                 var token = await tokenService.GetTokenAsync(); 
                 request.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token.AccessToken);
             }
