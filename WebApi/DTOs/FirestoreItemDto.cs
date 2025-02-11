@@ -113,7 +113,7 @@ namespace GtvApiHub.WebApi.DTOs
         }
 
         /// <summary>
-        /// Get generated id by unique Item Code value.
+        /// Get generated id by unique GtvItem Code value.
         /// 
         /// Objects in Firestore are stored without an ID, so it will generate a unique object ID.
         /// </summary>
