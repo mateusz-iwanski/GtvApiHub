@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 namespace GtvApiHub.WebApi.EndPointInterfaces
 {
     /// <summary>
-    /// Token interface.
+    /// GtvToken interface.
     /// 
     /// Represents a token which is in the request header (OAuth 2.0).
     /// </summary>
