@@ -48,8 +48,8 @@ namespace GtvApiHub
             services.AddSingleton<NLog.ILogger>(provider => NLog.LogManager.GetCurrentClassLogger());
 
             // Add options to bind to the configuration instance
-            services.Configure<GtvApiSettings>(context.Configuration.GetSection("Access").GetSection("GtvApi"));
-            services.Configure<TokenSettings>(context.Configuration.GetSection("TokenSettings"));
+            services.Configure<GtvApiSettings>(context.Configuration.GetSection("GtvApiAccess").GetSection("GtvApi"));
+            services.Configure<GtvTokenSettings>(context.Configuration.GetSection("GtvApiTokenSettings"));
             services.Configure<FirebaseSettings>(context.Configuration.GetSection("Firebase"));
 
             // Add Firestore services
@@ -60,19 +60,19 @@ namespace GtvApiHub
             
 
             // Add GTV Api services                                    
-            services.AddScoped<IApiConfigurationServices, ApiConfigurationServices>();            
-            services.AddScoped<ITokenSettingsManager, TokenSettingsManager>();
-            services.AddScoped<IFirestorageFileHandler, FirestorageDtoFileHandler>();
+            services.AddScoped<IGtvApiConfigurationServices, GtvApiConfigurationServices>();            
+            services.AddScoped<IGtvTokenSettingsManager, GtvTokenSettingsManager>();
+            services.AddScoped<IGtvFirestorageFileHandler, GtvFirestorageDtoFileHandler>();
 
-            services.AddScoped<IItem, Item>();
-            services.AddScoped<IToken, Token>();
-            services.AddScoped<IPrice, Price>();
-            services.AddScoped<IAttribute, AttributeItem>();
-            services.AddScoped<IPackageType, PackageType>();
-            services.AddScoped<IAlternativeItem, AlternativeItem>();
-            services.AddScoped<IStock, Stock>();
-            services.AddScoped<ICategoryTree, CategoryTree>();
-            services.AddScoped<IPromotion, Promotion>();
+            services.AddScoped<IGtvItem, GtvItem>();
+            services.AddScoped<IGtvToken, GtvToken>();
+            services.AddScoped<IGtvPrice, GtvPrice>();
+            services.AddScoped<IGtvAttribute, GtvAttributeItem>();
+            services.AddScoped<IGtvPackageType, GtvPackageType>();
+            services.AddScoped<IGtvAlternativeItem, GtvAlternativeItem>();
+            services.AddScoped<IGtvStockService, GtvStockService>();
+            services.AddScoped<IGtvCategoryTree, GtvCategoryTree>();
+            services.AddScoped<IGtvPromotion, GtvPromotion>();
 
             services.AddScoped<GtvFirestoreSyncItemManager>();
         }
