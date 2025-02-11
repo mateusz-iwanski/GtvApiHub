@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace GtvApiHub.WebApi.DTOs
 {
     /// <summary>
-    /// Item DTO represents products from Api.
+    /// GtvItem DTO represents products from Api.
     /// </summary>
     [FirestoreData]
     public record ItemDto : IBaseDto, IResponseDto, IFirestoreDto, IFirestoreDtoCompareStrategy
