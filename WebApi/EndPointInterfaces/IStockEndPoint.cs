@@ -9,10 +9,10 @@ namespace GtvApiHub.WebApi.EndPointInterfaces
 {
     public interface IStockEndPoint
     {
-        [Get("/odata/StockService")]
+        [Get("/odata/Stock")]
         Task<HttpResponseMessage> GetAsync();
 
-        [Get("/odata/StockService?$filter=ItemCode eq '{ItemCode}'")]
+        [Get("/odata/Stock?$filter=ItemCode eq '{ItemCode}'")]
         Task<HttpResponseMessage> GetByItemCodeAsync([AliasAs("ItemCode")] string itemCode);
     }
 }
