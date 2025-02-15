@@ -23,6 +23,13 @@ namespace GtvApiHub.WebApi.Services
         {
             var response = await _services.GetAsync();
 
+            if (response.StatusCode == System.Net.HttpStatusCode.NotFound)
+            {
+                return new List<PackageTypeDto>();
+            }
+            if (!response.IsSuccessStatusCode)
+                throw new GtvApiHub.Exceptions.ApiException($"GTV API wrong response, status code: {response.StatusCode}, content: {response.Content}");
+
             var listPackageTypeDto = await response.Content.GetListObjectAsync<PackageTypeDto>();
 
             return listPackageTypeDto;
@@ -36,6 +43,13 @@ namespace GtvApiHub.WebApi.Services
         public async Task<IEnumerable<PackageTypeDto>> GetAsync(string itemCode)
         {
             var response = await _services.GetDefaultByItemCodeAsync(itemCode);
+
+            if (response.StatusCode == System.Net.HttpStatusCode.NotFound)
+            {
+                return new List<PackageTypeDto>();
+            }
+            if (!response.IsSuccessStatusCode)
+                throw new GtvApiHub.Exceptions.ApiException($"GTV API wrong response, status code: {response.StatusCode}, content: {response.Content}");
 
             var listPackageTypeDto = await response.Content.GetListObjectAsync<PackageTypeDto>();
 
