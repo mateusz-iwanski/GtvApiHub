@@ -26,6 +26,13 @@ namespace GtvApiHub.WebApi.Services
         {
             var response = await _services.GetAsync();
 
+            if (response.StatusCode == System.Net.HttpStatusCode.NotFound)
+            {
+                return new List<PriceDto>();
+            }
+            if (!response.IsSuccessStatusCode)
+                throw new GtvApiHub.Exceptions.ApiException($"GTV API wrong response, status code: {response.StatusCode}, content: {response.Content}");
+
             var listItemDto = await response.Content.GetListObjectAsync<PriceDto>();
 
             return listItemDto;
@@ -34,6 +41,13 @@ namespace GtvApiHub.WebApi.Services
         public async Task<IEnumerable<PriceDto>> GetAsync(string itemCode)
         {
             var response = await _services.GetByItemCodeAsync(itemCode);
+
+            if (response.StatusCode == System.Net.HttpStatusCode.NotFound)
+            {
+                return new List<PriceDto>();
+            }
+            if (!response.IsSuccessStatusCode)
+                throw new GtvApiHub.Exceptions.ApiException($"GTV API wrong response, status code: {response.StatusCode}, content: {response.Content}");
 
             var listItemDto = await response.Content.GetListObjectAsync<PriceDto>();
 
