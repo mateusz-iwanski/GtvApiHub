@@ -1,4 +1,5 @@
-﻿using GtvApiHub.WebApi.DTOs;
+﻿using GtvApiHub.Exceptions;
+using GtvApiHub.WebApi.DTOs;
 using GtvApiHub.WebApi.EndPointInterfaces;
 using GtvApiHub.WebApi.Extensions;
 using GtvApiHub.WebApi.Objects;
@@ -34,6 +35,13 @@ namespace GtvApiHub.WebApi.Services
         {
             var response = await _services.GetAsync();
 
+            if (response.StatusCode == System.Net.HttpStatusCode.NotFound)
+            {
+                return new List<ItemDto>();
+            }
+            if (!response.IsSuccessStatusCode)
+                throw new ApiException($"GTV API wrong response, status code: {response.StatusCode}, content: {response.Content}");
+
             var listItemDto = await response.Content.GetListObjectAsync<ItemDto>();
 
             return listItemDto;
@@ -47,7 +55,14 @@ namespace GtvApiHub.WebApi.Services
         public async Task<IEnumerable<ItemDto>> GetAsync(LanguageCode languageCode)
         {
             var response = await _services.GetByLanguageAsync(languageCode.ToString());
-            
+
+            if (response.StatusCode == System.Net.HttpStatusCode.NotFound)
+            {
+                return new List<ItemDto>();
+            }
+            if (!response.IsSuccessStatusCode)
+                throw new ApiException($"GTV API wrong response, status code: {response.StatusCode}, content: {response.Content}");
+
             var listItemDto = await response.Content.GetListObjectAsync<ItemDto>();
 
             return listItemDto;
