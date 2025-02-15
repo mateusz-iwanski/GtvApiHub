@@ -1,4 +1,15 @@
-﻿//using FirebaseManager.Firestore;
+﻿
+namespace GtvApiHub
+{
+    internal class Program
+    {
+        public static void Main(string[] args)
+        {
+        }
+    }
+}
+
+//using FirebaseManager.Firestore;
 //using FirebaseManager.Storage;
 //using GtvApiHub.Helpers;
 //using GtvApiHub.WebApi;
@@ -12,16 +23,6 @@
 //using Newtonsoft.Json.Linq;
 //using System.Text.Json;
 //using static System.Net.Mime.MediaTypeNames;
-
-namespace GtvApiHub
-{
-    internal class Program
-    {
-        public static void Main(string[] args)
-        {
-        }
-    }
-}
 
 
 //namespace GtvApiHub
@@ -41,14 +42,14 @@ namespace GtvApiHub
 //            await token.GetTokenAsync();
 
 //            // ITEM SERVICE
-//            var itemService = scope.ServiceProvider.GetRequiredService<IGtvItem>();
+//            //var itemService = scope.ServiceProvider.GetRequiredService<IGtvItem>();
 //            //var service = await itemService.GetAsync();
 //            //var service = await itemService.GetAsync(LanguageCode.pl);
 
 //            // PIECE SERVICE
-//            var priceService = scope.ServiceProvider.GetRequiredService<IGtvPrice>();
+//            //var priceService = scope.ServiceProvider.GetRequiredService<IGtvPrice>();
 //            //var service = await priceService.GetAsync();
-//            var service = await priceService.GetAsync("ZZ-ZN-338-01-S");
+//            //var service = await priceService.GetAsync("ZZ-ZN-338-01-S");
 
 //            // ATTRIBUTE SERVICE
 //            //var attributeService = scope.ServiceProvider.GetRequiredService<IGtvAttribute>();
@@ -65,26 +66,26 @@ namespace GtvApiHub
 //            // ALTERNATIVE ITEM SERVICE
 //            //var alternativeItemService = scope.ServiceProvider.GetRequiredService<IGtvAlternativeItem>();
 //            //var service = await alternativeItemService.GetAsync();
-//            //var service = await alternativeItemService.GetAsync("ZZ-Z0-202-01");
+//            // service = await alternativeItemService.GetAsync("ZZ-Z0-202-01");
 
 //            // STOCK SERVICE
 //            //var stockService = scope.ServiceProvider.GetRequiredService<IGtvStockService>();
 //            //var service = await stockService.GetAsync();
-//            //var service = await stockService.GetAsync("ZZ-ZN-338-01-S");
+//            //var service = await stockService.GetAsync("00-KLUCZREG-DPADPD");
 
 //            // CATEGORY TREE SERVICE
-//            //var categoryTreeService = scope.ServiceProvider.GetRequiredService<IGtvCategoryTree>();
-//            //var service = await categoryTreeService.GetAsync();
+//            var categoryTreeService = scope.ServiceProvider.GetRequiredService<IGtvCategoryTree>();
+//            var service = await categoryTreeService.GetAsync();
 //            //var service = await categoryTreeService.GetAsync("ZZ-ZN-338-01-S");
 
 //            // PROMOTION SERVICE
 //            //var promotionService = scope.ServiceProvider.GetRequiredService<IGtvPromotion>();
 //            //var service = await promotionService.GetAsync();
 
-//            //foreach (var i in service)
-//            //{
-//            //    Console.WriteLine(i);
-//            //}
+//            foreach (var i in service)
+//            {
+//                Console.WriteLine("---> " + i);
+//            }
 
 //            // UPLOAD FILE TO FIRESTORAGE
 //            //var fsDtoFileHandler = scope.ServiceProvider.GetRequiredService<IGtvFirestorageFileHandler>();
