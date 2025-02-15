@@ -22,6 +22,13 @@ namespace GtvApiHub.WebApi.Services
         {
             var response = await _services.GetAsync();
 
+            if (response.StatusCode == System.Net.HttpStatusCode.NotFound)
+            {
+                return new List<PromotionDto>();
+            }
+            if (!response.IsSuccessStatusCode)
+                throw new GtvApiHub.Exceptions.ApiException($"GTV API wrong response, status code: {response.StatusCode}, content: {response.Content}");
+
             var listItemDto = await response.Content.GetListObjectAsync<PromotionDto>();
 
             return listItemDto;
