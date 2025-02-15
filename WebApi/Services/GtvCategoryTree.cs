@@ -1,4 +1,5 @@
-﻿using GtvApiHub.WebApi.DTOs;
+﻿using GtvApiHub.Exceptions;
+using GtvApiHub.WebApi.DTOs;
 using GtvApiHub.WebApi.EndPointInterfaces;
 using GtvApiHub.WebApi.Extensions;
 using System;
@@ -22,6 +23,13 @@ namespace GtvApiHub.WebApi.Services
         {
             var response = await _services.GetAsync();
 
+            if (response.StatusCode == System.Net.HttpStatusCode.NotFound)
+            {
+                return new List<CategoryTreeDto>();
+            }
+            if (!response.IsSuccessStatusCode)
+                throw new ApiException($"GTV API wrong response, status code: {response.StatusCode}, content: {response.Content}");
+
             var listCategoryTreeDto = await response.Content.GetListObjectAsync<CategoryTreeDto>();
 
             return listCategoryTreeDto;
@@ -31,6 +39,13 @@ namespace GtvApiHub.WebApi.Services
         public async Task<IEnumerable<CategoryTreeDto>> GetAsync(string itemCode)
         {
             var response = await _services.GetByItemCodeAsync(itemCode);
+
+            if (response.StatusCode == System.Net.HttpStatusCode.NotFound)
+            {
+                return new List<CategoryTreeDto>();
+            }
+            if (!response.IsSuccessStatusCode)
+                throw new ApiException($"GTV API wrong response, status code: {response.StatusCode}, content: {response.Content}");
 
             var listCategoryTreeDto = await response.Content.GetListObjectAsync<CategoryTreeDto>();
 
