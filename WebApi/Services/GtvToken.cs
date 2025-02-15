@@ -67,7 +67,7 @@ namespace GtvApiHub.WebApi.Services
             _tokenSettingsManager.UpdateTokenSettings(deserializedResponse);
 
             return deserializedResponse;
-        }
+            }
 
         /// <summary>
         /// Check if the token has not expired.
