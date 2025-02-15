@@ -1,4 +1,5 @@
-﻿using GtvApiHub.WebApi.DTOs;
+﻿using GtvApiHub.Exceptions;
+using GtvApiHub.WebApi.DTOs;
 using GtvApiHub.WebApi.EndPointInterfaces;
 using GtvApiHub.WebApi.Extensions;
 using System;
@@ -44,6 +45,13 @@ namespace GtvApiHub.WebApi.Services
         {
             var response = await _services.GetByItemCodeAsync(itemCode);
 
+            if (response.StatusCode == System.Net.HttpStatusCode.NotFound)
+            {
+                return new List<AttributeDto>();
+            }
+            if (!response.IsSuccessStatusCode)
+                throw new ApiException($"GTV API wrong response, status code: {response.StatusCode}, content: {response.Content}");
+
             var listItemDto = await response.Content.GetListObjectAsync<AttributeDto>();
 
             return listItemDto;
@@ -52,6 +60,13 @@ namespace GtvApiHub.WebApi.Services
         public async Task<IEnumerable<AttributeDto>> GetAsync(LanguageCode languageCode)
         {
             var response = await _services.GetByLanguageCodeAsync(languageCode.ToString());
+
+            if (response.StatusCode == System.Net.HttpStatusCode.NotFound)
+            {
+                return new List<AttributeDto>();
+            }
+            if (!response.IsSuccessStatusCode)
+                throw new ApiException($"GTV API wrong response, status code: {response.StatusCode}, content: {response.Content}");
 
             var listItemDto = await response.Content.GetListObjectAsync<AttributeDto>();
 
@@ -62,6 +77,13 @@ namespace GtvApiHub.WebApi.Services
         {
             var response = await _services.GetByAttributeTypeAsync(attributeType.ToString());
 
+            if (response.StatusCode == System.Net.HttpStatusCode.NotFound)
+            {
+                return new List<AttributeDto>();
+            }
+            if (!response.IsSuccessStatusCode)
+                throw new ApiException($"GTV API wrong response, status code: {response.StatusCode}, content: {response.Content}");
+
             var listItemDto = await response.Content.GetListObjectAsync<AttributeDto>();
 
             return listItemDto;
@@ -70,6 +92,13 @@ namespace GtvApiHub.WebApi.Services
         public async Task<IEnumerable<AttributeDto>> GetAsync(AttributeType attributeType, LanguageCode languageCode)
         {
             var response = await _services.GetByAttributeTypeLanguageCodeAsync(attributeType.ToString(), languageCode.ToString());
+
+            if (response.StatusCode == System.Net.HttpStatusCode.NotFound)
+            {
+                return new List<AttributeDto>();
+            }
+            if (!response.IsSuccessStatusCode)
+                throw new ApiException($"GTV API wrong response, status code: {response.StatusCode}, content: {response.Content}");
 
             var listItemDto = await response.Content.GetListObjectAsync<AttributeDto>();
 
