@@ -22,6 +22,15 @@ namespace GtvApiHub.WebApi.Services
         {
             var response = await _services.GetAsync();
 
+            if (response.StatusCode == System.Net.HttpStatusCode.NotFound)
+            {
+                return new List<StockDto>();
+            }
+            if (!response.IsSuccessStatusCode)
+                throw new GtvApiHub.Exceptions.ApiException($"GTV API wrong response, status code: {response.StatusCode}, content: {response.Content}");
+
+            var k = await response.Content.ReadAsStringAsync();
+
             var listStockDto = await response.Content.GetListObjectAsync<StockDto>();
 
             return listStockDto;
@@ -30,6 +39,15 @@ namespace GtvApiHub.WebApi.Services
         public async Task<IEnumerable<StockDto>> GetAsync(string itemCode)
         {
             var response = await _services.GetByItemCodeAsync(itemCode);
+
+            //if (response.StatusCode == System.Net.HttpStatusCode.NotFound)
+            //{
+            //    return new List<StockDto>();
+            //}
+            //if (!response.IsSuccessStatusCode)
+            //    throw new GtvApiHub.Exceptions.ApiException($"GTV API wrong response, status code: {response.StatusCode}, content: {response.Content}");
+
+            var wm = await response.Content.ReadAsStringAsync();
 
             var listStockDto = await response.Content.GetListObjectAsync<StockDto>();
 
