@@ -1,6 +1,8 @@
-﻿using GtvApiHub.WebApi.DTOs;
+﻿using GtvApiHub.Exceptions;
+using GtvApiHub.WebApi.DTOs;
 using GtvApiHub.WebApi.EndPointInterfaces;
 using GtvApiHub.WebApi.Extensions;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,6 +23,14 @@ namespace GtvApiHub.WebApi.Services
         public async Task<IEnumerable<AlternativeItemDto>> GetAsync()
         {
             var response = await _services.GetAsync();
+            
+            if (response.StatusCode == System.Net.HttpStatusCode.NotFound)
+            {
+                return new List<AlternativeItemDto>();
+            }
+            if (!response.IsSuccessStatusCode)
+                throw new ApiException($"GTV API wrong response, status code: {response.StatusCode}, content: {response.Content}");
+
 
             var listItemDto = await response.Content.GetListObjectAsync<AlternativeItemDto>();
 
@@ -30,6 +40,13 @@ namespace GtvApiHub.WebApi.Services
         public async Task<IEnumerable<AlternativeItemDto>> GetAsync(string baseItemCode)
         {
             var response = await _services.GetByBaseItemCodeAsync(baseItemCode);
+
+            if (response.StatusCode == System.Net.HttpStatusCode.NotFound)
+            {
+                return new List<AlternativeItemDto>();
+            }
+            if (!response.IsSuccessStatusCode)
+                throw new ApiException($"GTV API wrong response, status code: {response.StatusCode}, content: {response.Content}");
 
             var listItemDto = await response.Content.GetListObjectAsync<AlternativeItemDto>();
 
