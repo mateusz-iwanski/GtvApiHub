@@ -13,13 +13,13 @@ namespace GtvApiHub.WebApi.Services
 {
     public class GtvApiConnectionValidator
     {
-        private readonly ICategoryTreeEndPoint _services;
+        private readonly IAlternativeItemEndPoint _services;
         private readonly IGtvToken _token;
 
         public GtvApiConnectionValidator(IGtvApiConfigurationServices services, IGtvToken token)
         {
             _token = token;
-            _services = services.CategoryTreeService;
+            _services = services.AlternativeItemService;
 
         }
 
@@ -27,29 +27,22 @@ namespace GtvApiHub.WebApi.Services
         {
             try
             {
-                var timeout = TimeSpan.FromSeconds(30);
-                var delayTask = Task.Delay(timeout);
-                var completedTask = await Task.WhenAny(delayTask);
-                if (completedTask == delayTask)
-                {
-                    throw new ApiConnectionException("The request to the GTV API timed out.");
-                }
-
+               
                 await _token.GetTokenAsync();
 
                 var response = await _services.GetAsync();
 
                 if (response.StatusCode == System.Net.HttpStatusCode.NotFound)
                 {
-                    throw new ApiConnectionException("GTV api return status 'Not Found' when try to get all categories in the connection validator");
+                    throw new ApiConnectionException("GTV api return status 'Not Found' when try to get all alternative items in the connection validator");
                 }
                 if (!response.IsSuccessStatusCode)
-                    throw new ApiConnectionException($"GTV api return status code {response.StatusCode} when try to get all categories in the connection validator");
+                    throw new ApiConnectionException($"GTV api return status code {response.StatusCode} when try to get all alternative items in the connection validator");
 
                 var listCategoryTreeDto = await response.Content.GetListObjectAsync<CategoryTreeDto>();
 
                 if (listCategoryTreeDto == null)
-                    throw new ApiConnectionException("GTV api return null when try to get all categories in the connection validator");
+                    throw new ApiConnectionException("GTV api return null when try to get all alternative items in the connection validator");
 
             }
             catch (Exception ex)
