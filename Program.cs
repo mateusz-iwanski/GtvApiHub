@@ -52,11 +52,11 @@ namespace GtvApiHub
             //var service = await priceService.GetAsync("ZZ-ZN-338-01-S");
 
             // ATTRIBUTE SERVICE
-            var attributeService = scope.ServiceProvider.GetRequiredService<IGtvAttribute>();
+            //var attributeService = scope.ServiceProvider.GetRequiredService<IGtvAttribute>();
             //var service = await attributeService.GetAsync();
             //var service = await attributeService.GetAsync("ZZ-ZN-338-01-S");
             //var service = await attributeService.GetAsync(LanguageCode.uk);
-            var service = await attributeService.GetAsync(AttributeType.File);
+            // var service = await attributeService.GetAsync(AttributeType.File);
 
             // PACKAGETYPE SERVICE
             //var packageTypeService = scope.ServiceProvider.GetRequiredService<IGtvPackageType>();
@@ -74,8 +74,8 @@ namespace GtvApiHub
             //var service = await stockService.GetAsync("00-KLUCZREG-DPADPD");
 
             // CATEGORY TREE SERVICE
-            //var categoryTreeService = scope.ServiceProvider.GetRequiredService<IGtvCategoryTree>();
-            //var service = await categoryTreeService.GetAsync();
+            var categoryTreeService = scope.ServiceProvider.GetRequiredService<IGtvCategoryTree>();
+            var service = await categoryTreeService.GetAsync();
             //var service = await categoryTreeService.GetAsync("ZZ-ZN-338-01-S");
 
             // PROMOTION SERVICE
