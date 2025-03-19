@@ -42,9 +42,9 @@ namespace GtvApiHub
             await token.GetTokenAsync();
 
             // ITEM SERVICE
-            //var itemService = scope.ServiceProvider.GetRequiredService<IGtvItem>();
+            var itemService = scope.ServiceProvider.GetRequiredService<IGtvItem>();
             //var service = await itemService.GetAsync();
-            //var service = await itemService.GetAsync(LanguageCode.pl);
+            var service = await itemService.GetAsync(LanguageCode.pl);
 
             // PIECE SERVICE
             //var priceService = scope.ServiceProvider.GetRequiredService<IGtvPrice>();
@@ -74,8 +74,8 @@ namespace GtvApiHub
             //var service = await stockService.GetAsync("00-KLUCZREG-DPADPD");
 
             // CATEGORY TREE SERVICE
-            var categoryTreeService = scope.ServiceProvider.GetRequiredService<IGtvCategoryTree>();
-            var service = await categoryTreeService.GetAsync();
+            //var categoryTreeService = scope.ServiceProvider.GetRequiredService<IGtvCategoryTree>();
+            //var service = await categoryTreeService.GetAsync();
             //var service = await categoryTreeService.GetAsync("ZZ-ZN-338-01-S");
 
             // PROMOTION SERVICE
